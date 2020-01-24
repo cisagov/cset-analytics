@@ -1,0 +1,8 @@
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Factories\bin\Debug\netcoreapp3.1\CsetAnonymous.Factories.deps.json
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Factories\bin\Debug\netcoreapp3.1\CsetAnonymous.Factories.dll
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Factories\bin\Debug\netcoreapp3.1\CsetAnonymous.Factories.pdb
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Factories\obj\Debug\netcoreapp3.1\CsetAnonymous.Factories.csprojAssemblyReference.cache
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Factories\obj\Debug\netcoreapp3.1\CsetAnonymous.Factories.AssemblyInfoInputs.cache
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Factories\obj\Debug\netcoreapp3.1\CsetAnonymous.Factories.AssemblyInfo.cs
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Factories\obj\Debug\netcoreapp3.1\CsetAnonymous.Factories.dll
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Factories\obj\Debug\netcoreapp3.1\CsetAnonymous.Factories.pdb

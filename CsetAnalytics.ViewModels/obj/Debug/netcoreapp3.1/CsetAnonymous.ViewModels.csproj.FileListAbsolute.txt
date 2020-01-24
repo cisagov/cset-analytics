@@ -1,0 +1,8 @@
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.ViewModels\bin\Debug\netcoreapp3.1\CsetAnonymous.ViewModels.deps.json
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.ViewModels\bin\Debug\netcoreapp3.1\CsetAnonymous.ViewModels.dll
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.ViewModels\bin\Debug\netcoreapp3.1\CsetAnonymous.ViewModels.pdb
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.ViewModels\obj\Debug\netcoreapp3.1\CsetAnonymous.ViewModels.csprojAssemblyReference.cache
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.ViewModels\obj\Debug\netcoreapp3.1\CsetAnonymous.ViewModels.AssemblyInfoInputs.cache
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.ViewModels\obj\Debug\netcoreapp3.1\CsetAnonymous.ViewModels.AssemblyInfo.cs
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.ViewModels\obj\Debug\netcoreapp3.1\CsetAnonymous.ViewModels.dll
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.ViewModels\obj\Debug\netcoreapp3.1\CsetAnonymous.ViewModels.pdb

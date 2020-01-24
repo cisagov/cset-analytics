@@ -1,0 +1,8 @@
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Constants\bin\Debug\netcoreapp3.1\CsetAnonymous.Constants.deps.json
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Constants\bin\Debug\netcoreapp3.1\CsetAnonymous.Constants.dll
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Constants\bin\Debug\netcoreapp3.1\CsetAnonymous.Constants.pdb
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Constants\obj\Debug\netcoreapp3.1\CsetAnonymous.Constants.csprojAssemblyReference.cache
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Constants\obj\Debug\netcoreapp3.1\CsetAnonymous.Constants.AssemblyInfoInputs.cache
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Constants\obj\Debug\netcoreapp3.1\CsetAnonymous.Constants.AssemblyInfo.cs
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Constants\obj\Debug\netcoreapp3.1\CsetAnonymous.Constants.dll
+C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Constants\obj\Debug\netcoreapp3.1\CsetAnonymous.Constants.pdb
