@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj": {}
+    "C:\\repos\\cset-analytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj": {}
   },
   "projects": {
-    "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj": {
+    "C:\\repos\\cset-analytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj",
+        "projectUniqueName": "C:\\repos\\cset-analytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj",
         "projectName": "CsetAnalytics.DomainModels",
-        "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj",
+        "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj",
         "packagesPath": "C:\\Users\\KUIPJE\\.nuget\\packages\\",
-        "outputPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.DomainModels\\obj\\",
+        "outputPath": "C:\\repos\\cset-analytics\\CsetAnalytics.DomainModels\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KUIPJE\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -27,8 +27,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj": {
-                "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj"
+              "C:\\repos\\cset-analytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj": {
+                "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj"
               }
             }
           }
@@ -90,14 +90,14 @@
         }
       }
     },
-    "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj": {
+    "C:\\repos\\cset-analytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj",
+        "projectUniqueName": "C:\\repos\\cset-analytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj",
         "projectName": "CsetAnalytics.Enums",
-        "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj",
+        "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Enums\\CsetAnalytics.Enums.csproj",
         "packagesPath": "C:\\Users\\KUIPJE\\.nuget\\packages\\",
-        "outputPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Enums\\obj\\",
+        "outputPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Enums\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KUIPJE\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Validators\\CsetAnalytics.Validators.csproj": {}
+    "C:\\repos\\cset-analytics\\CsetAnalytics.Validators\\CsetAnalytics.Validators.csproj": {}
   },
   "projects": {
-    "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Validators\\CsetAnalytics.Validators.csproj": {
+    "C:\\repos\\cset-analytics\\CsetAnalytics.Validators\\CsetAnalytics.Validators.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Validators\\CsetAnalytics.Validators.csproj",
+        "projectUniqueName": "C:\\repos\\cset-analytics\\CsetAnalytics.Validators\\CsetAnalytics.Validators.csproj",
         "projectName": "CsetAnalytics.Validators",
-        "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Validators\\CsetAnalytics.Validators.csproj",
+        "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Validators\\CsetAnalytics.Validators.csproj",
         "packagesPath": "C:\\Users\\KUIPJE\\.nuget\\packages\\",
-        "outputPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Validators\\obj\\",
+        "outputPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Validators\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\KUIPJE\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -45,7 +45,7 @@ namespace CsetAnalytics.Api.Controllers
                     (await _questionViewModelFactory.CreateAsync(analytics.QuestionAnswers.AsQueryable())).ToList();
                 questions.ForEach(x=>x.AnalyticDemographicId = rDemographic.AnalyticDemographicId);
                 await _analyticsBusiness.SaveAnalyticQuestions(questions);
-                return Ok("Analytics information saved");
+                return Ok(new {message="Analytics data saved"});
             }
             catch (Exception ex)
             {

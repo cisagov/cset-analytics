@@ -7596,11 +7596,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Api\\CsetAnalytics.Api.csproj",
+      "projectUniqueName": "C:\\repos\\cset-analytics\\CsetAnalytics.Api\\CsetAnalytics.Api.csproj",
       "projectName": "CsetAnalytics.Api",
-      "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Api\\CsetAnalytics.Api.csproj",
+      "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Api\\CsetAnalytics.Api.csproj",
       "packagesPath": "C:\\Users\\KUIPJE\\.nuget\\packages\\",
-      "outputPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Api\\obj\\",
+      "outputPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\KUIPJE\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7616,20 +7616,20 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Business\\CsetAnalytics.Business.csproj": {
-              "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Business\\CsetAnalytics.Business.csproj"
+            "C:\\repos\\cset-analytics\\CsetAnalytics.Business\\CsetAnalytics.Business.csproj": {
+              "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Business\\CsetAnalytics.Business.csproj"
             },
-            "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj": {
-              "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj"
+            "C:\\repos\\cset-analytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj": {
+              "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.DomainModels\\CsetAnalytics.DomainModels.csproj"
             },
-            "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Factories\\CsetAnalytics.Factories.csproj": {
-              "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Factories\\CsetAnalytics.Factories.csproj"
+            "C:\\repos\\cset-analytics\\CsetAnalytics.Factories\\CsetAnalytics.Factories.csproj": {
+              "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Factories\\CsetAnalytics.Factories.csproj"
             },
-            "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Interfaces\\CsetAnalytics.Interfaces.csproj": {
-              "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Interfaces\\CsetAnalytics.Interfaces.csproj"
+            "C:\\repos\\cset-analytics\\CsetAnalytics.Interfaces\\CsetAnalytics.Interfaces.csproj": {
+              "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Interfaces\\CsetAnalytics.Interfaces.csproj"
             },
-            "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.ViewModels\\CsetAnalytics.ViewModels.csproj": {
-              "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.ViewModels\\CsetAnalytics.ViewModels.csproj"
+            "C:\\repos\\cset-analytics\\CsetAnalytics.ViewModels\\CsetAnalytics.ViewModels.csproj": {
+              "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.ViewModels\\CsetAnalytics.ViewModels.csproj"
             }
           }
         }

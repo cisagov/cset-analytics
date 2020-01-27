@@ -847,11 +847,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Constants\\CsetAnalytics.Constants.csproj",
+      "projectUniqueName": "C:\\repos\\cset-analytics\\CsetAnalytics.Constants\\CsetAnalytics.Constants.csproj",
       "projectName": "CsetAnalytics.Constants",
-      "projectPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Constants\\CsetAnalytics.Constants.csproj",
+      "projectPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Constants\\CsetAnalytics.Constants.csproj",
       "packagesPath": "C:\\Users\\KUIPJE\\.nuget\\packages\\",
-      "outputPath": "C:\\repos\\cset_analytics\\CsetAnalytics\\CsetAnalytics.Constants\\obj\\",
+      "outputPath": "C:\\repos\\cset-analytics\\CsetAnalytics.Constants\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\KUIPJE\\AppData\\Roaming\\NuGet\\NuGet.Config",
