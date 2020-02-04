@@ -6,3 +6,11 @@ C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.Validators\obj\Debug\netcore
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.Validators\obj\Debug\netcoreapp3.1\CsetAnalytics.Validators.AssemblyInfo.cs
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.Validators\obj\Debug\netcoreapp3.1\CsetAnalytics.Validators.dll
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.Validators\obj\Debug\netcoreapp3.1\CsetAnalytics.Validators.pdb
+C:\repos\cset-analytics\CsetAnalytics.Validators\bin\Debug\netcoreapp3.1\CsetAnalytics.Validators.deps.json
+C:\repos\cset-analytics\CsetAnalytics.Validators\bin\Debug\netcoreapp3.1\CsetAnalytics.Validators.dll
+C:\repos\cset-analytics\CsetAnalytics.Validators\bin\Debug\netcoreapp3.1\CsetAnalytics.Validators.pdb
+C:\repos\cset-analytics\CsetAnalytics.Validators\obj\Debug\netcoreapp3.1\CsetAnalytics.Validators.csprojAssemblyReference.cache
+C:\repos\cset-analytics\CsetAnalytics.Validators\obj\Debug\netcoreapp3.1\CsetAnalytics.Validators.AssemblyInfoInputs.cache
+C:\repos\cset-analytics\CsetAnalytics.Validators\obj\Debug\netcoreapp3.1\CsetAnalytics.Validators.AssemblyInfo.cs
+C:\repos\cset-analytics\CsetAnalytics.Validators\obj\Debug\netcoreapp3.1\CsetAnalytics.Validators.dll
+C:\repos\cset-analytics\CsetAnalytics.Validators\obj\Debug\netcoreapp3.1\CsetAnalytics.Validators.pdb

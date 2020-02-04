@@ -11,7 +11,7 @@ using CsetAnalytics.ViewModels;
 
 namespace CsetAnalytics.Factories.Analytics
 {
-    public class AnalyticDemographicViewModelFactory : IBaseFactoryAsync<AnalyticDemographic, AnalyticDemographicViewModel>
+    public class AnalyticDemographicViewModelFactory : IBaseFactory<AnalyticDemographic, AnalyticDemographicViewModel>
     {
         private readonly IMapper _mapper;
 
@@ -20,12 +20,12 @@ namespace CsetAnalytics.Factories.Analytics
             _mapper = mapper;
         }
 
-        public async Task<AnalyticDemographicViewModel> CreateAsync(AnalyticDemographic demographic)
+        public AnalyticDemographicViewModel Create(AnalyticDemographic demographic)
         {
             return _mapper.Map<AnalyticDemographicViewModel>(demographic);
         }
 
-        public async Task<IQueryable<AnalyticDemographicViewModel>> CreateAsync(IQueryable<AnalyticDemographic> demographics)
+        public IQueryable<AnalyticDemographicViewModel> Create(IQueryable<AnalyticDemographic> demographics)
         {
             var config = new MapperConfiguration(cfg => cfg.DisableConstructorMapping());
             return demographics.ProjectTo<AnalyticDemographicViewModel>(config);

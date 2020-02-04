@@ -13,3 +13,11 @@ C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.ViewModels\obj\Debug\netcore
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.ViewModels\obj\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.dll
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.ViewModels\obj\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.pdb
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.ViewModels\obj\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.csprojAssemblyReference.cache
+C:\repos\cset-analytics\CsetAnalytics.ViewModels\bin\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.deps.json
+C:\repos\cset-analytics\CsetAnalytics.ViewModels\bin\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.dll
+C:\repos\cset-analytics\CsetAnalytics.ViewModels\bin\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.pdb
+C:\repos\cset-analytics\CsetAnalytics.ViewModels\obj\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.csprojAssemblyReference.cache
+C:\repos\cset-analytics\CsetAnalytics.ViewModels\obj\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.AssemblyInfoInputs.cache
+C:\repos\cset-analytics\CsetAnalytics.ViewModels\obj\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.AssemblyInfo.cs
+C:\repos\cset-analytics\CsetAnalytics.ViewModels\obj\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.dll
+C:\repos\cset-analytics\CsetAnalytics.ViewModels\obj\Debug\netcoreapp3.1\CsetAnalytics.ViewModels.pdb

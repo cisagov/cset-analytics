@@ -11,3 +11,16 @@ C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.DomainModels\obj\Debug\netco
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.csproj.CopyComplete
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.dll
 C:\repos\cset_analytics\CsetAnalytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.pdb
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\bin\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.deps.json
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\bin\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.runtimeconfig.json
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\bin\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.runtimeconfig.dev.json
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\bin\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.dll
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\bin\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.pdb
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\bin\Debug\netcoreapp3.1\CsetAnalytics.Enums.dll
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\bin\Debug\netcoreapp3.1\CsetAnalytics.Enums.pdb
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.csprojAssemblyReference.cache
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.AssemblyInfoInputs.cache
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.AssemblyInfo.cs
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.csproj.CopyComplete
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.dll
+C:\repos\cset-analytics\CsetAnalytics.DomainModels\obj\Debug\netcoreapp3.1\CsetAnalytics.DomainModels.pdb

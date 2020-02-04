@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
-using CsetAnalytics.Api.ViewModels;
-using CsetAnalytics.Business.Analytics;
-using CsetAnalytics.DomainModels;
 using CsetAnalytics.DomainModels.Models;
-using CsetAnalytics.Factories.Analytics;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using CsetAnalytics.ViewModels;
 using CsetAnalytics.Interfaces.Analytics;
 using CsetAnalytics.Interfaces.Factories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CsetAnalytics.Api.Controllers
 {
@@ -32,6 +29,7 @@ namespace CsetAnalytics.Api.Controllers
             _analyticsBusiness = analyticsBusiness;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("postAnalyticsAnonymously")]
         public async Task<IActionResult> PostAnalyticsAnonymously([FromBody]AnalyticsViewModel analytics)
@@ -43,13 +41,35 @@ namespace CsetAnalytics.Api.Controllers
 
                 List<AnalyticQuestion> questions =
                     (await _questionViewModelFactory.CreateAsync(analytics.QuestionAnswers.AsQueryable())).ToList();
-                questions.ForEach(x=>x.AnalyticDemographicId = rDemographic.AnalyticDemographicId);
+                questions.ForEach(x => x.AnalyticDemographicId = rDemographic.AnalyticDemographicId);
                 await _analyticsBusiness.SaveAnalyticQuestions(questions);
-                return Ok(new {message="Analytics data saved"});
+                return Ok(new { message = "Analytics data saved" });
             }
             catch (Exception ex)
             {
                 return BadRequest($"Analytic information was not saved: {ex.Message}");
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("postAnalytics")]
+        public async Task<IActionResult> PostAnalytics([FromBody]AnalyticsViewModel analytics){
+            try
+            {
+                string username = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                AnalyticDemographic demographic = await _demographicViewModelFactory.CreateAsync(analytics.Demographics);
+                AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
+
+                List<AnalyticQuestion> questions =
+                    (await _questionViewModelFactory.CreateAsync(analytics.QuestionAnswers.AsQueryable())).ToList();
+                questions.ForEach(x => x.AnalyticDemographicId = rDemographic.AnalyticDemographicId);
+                await _analyticsBusiness.SaveAnalyticQuestions(questions);
+                return Ok(new { message = "Analytics data saved" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Analytics information was not saved: {ex.Message}");
             }
         }
     }

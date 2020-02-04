@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using CsetAnalytics.Api.ViewModels;
 using CsetAnalytics.DomainModels;
 using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Interfaces;
 using CsetAnalytics.ViewModels;
+using CsetAnalytics.ViewModels.Login;
 using CsetAnalytics.ViewModels.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

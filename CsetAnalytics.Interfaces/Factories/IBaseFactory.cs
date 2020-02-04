@@ -13,13 +13,13 @@ namespace CsetAnalytics.Interfaces.Factories
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<TResult> Create(TInput input);
+        TResult Create(TInput input);
 
         /// <summary>
         /// Convert the specified IQueryable input of type "TInput" to an IQueryable of type "Task&lt;TResult>"
         /// </summary>
         /// <param name="inputs"></param>
         /// <returns></returns>
-        Task<IQueryable<TResult>> Create(IQueryable<TInput> inputs);
+        IQueryable<TResult> Create(IQueryable<TInput> inputs);
     }
 }

@@ -118,10 +118,10 @@ namespace CsetAnalytics.Api
             services.AddTransient<IAnalyticBusiness, AnalyticsBusiness>();
 
             //Factories
-            services.AddTransient<IBaseFactoryAsync<AnalyticDemographicViewModel, AnalyticDemographic>, AnalyticDemographicModelFactory>();
-            services.AddTransient<IBaseFactoryAsync<AnalyticDemographic, AnalyticDemographicViewModel>, AnalyticDemographicViewModelFactory>();
-            services.AddTransient<IBaseFactoryAsync<AnalyticQuestionViewModel, AnalyticQuestion>, AnalyticQuestionModelFactory>();
-            services.AddTransient<IBaseFactoryAsync<AnalyticQuestion, AnalyticQuestionViewModel>, AnalyticQuestionViewModelFactory>();
+            services.AddTransient<IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic>, AnalyticDemographicModelFactory>();
+            services.AddTransient<IBaseFactory<AnalyticDemographic, AnalyticDemographicViewModel>, AnalyticDemographicViewModelFactory>();
+            services.AddTransient<IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestion>, AnalyticQuestionModelFactory>();
+            services.AddTransient<IBaseFactory<AnalyticQuestion, AnalyticQuestionViewModel>, AnalyticQuestionViewModelFactory>();
 
 
         }

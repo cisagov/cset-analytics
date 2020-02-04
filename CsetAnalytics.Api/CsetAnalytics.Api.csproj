@@ -32,5 +32,9 @@
     <ProjectReference Include="..\CsetAnalytics.ViewModels\CsetAnalytics.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
 
 </Project>

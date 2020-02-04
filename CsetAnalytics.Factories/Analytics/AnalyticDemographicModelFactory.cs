@@ -8,10 +8,11 @@ using AutoMapper.QueryableExtensions;
 using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Interfaces.Factories;
 using CsetAnalytics.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace CsetAnalytics.Factories.Analytics
 {
-    public class AnalyticDemographicModelFactory : IBaseFactoryAsync<AnalyticDemographicViewModel, AnalyticDemographic>
+    public class AnalyticDemographicModelFactory : IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic>
     {
         private readonly IMapper _mapper;
 
@@ -20,12 +21,12 @@ namespace CsetAnalytics.Factories.Analytics
             _mapper = mapper;
         }
 
-        public async Task<AnalyticDemographic> CreateAsync(AnalyticDemographicViewModel model)
+        public AnalyticDemographic Create(AnalyticDemographicViewModel model)
         {
             return _mapper.Map<AnalyticDemographic>(model);
         }
 
-        public async Task<IQueryable<AnalyticDemographic>> CreateAsync(IQueryable<AnalyticDemographicViewModel> models)
+        public IQueryable<AnalyticDemographic> Create(IQueryable<AnalyticDemographicViewModel> models)
         {
             var config = new MapperConfiguration(cfg => cfg.DisableConstructorMapping());
             return models.ProjectTo<AnalyticDemographic>(config);
