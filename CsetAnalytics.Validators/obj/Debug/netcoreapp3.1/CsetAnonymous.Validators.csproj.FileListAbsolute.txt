@@ -1,8 +1,0 @@
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Validators\bin\Debug\netcoreapp3.1\CsetAnonymous.Validators.deps.json
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Validators\bin\Debug\netcoreapp3.1\CsetAnonymous.Validators.dll
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Validators\bin\Debug\netcoreapp3.1\CsetAnonymous.Validators.pdb
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Validators\obj\Debug\netcoreapp3.1\CsetAnonymous.Validators.csprojAssemblyReference.cache
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Validators\obj\Debug\netcoreapp3.1\CsetAnonymous.Validators.AssemblyInfoInputs.cache
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Validators\obj\Debug\netcoreapp3.1\CsetAnonymous.Validators.AssemblyInfo.cs
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Validators\obj\Debug\netcoreapp3.1\CsetAnonymous.Validators.dll
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Validators\obj\Debug\netcoreapp3.1\CsetAnonymous.Validators.pdb

@@ -1,8 +1,0 @@
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Enums\bin\Debug\netcoreapp3.1\CsetAnonymous.Enums.deps.json
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Enums\bin\Debug\netcoreapp3.1\CsetAnonymous.Enums.dll
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Enums\bin\Debug\netcoreapp3.1\CsetAnonymous.Enums.pdb
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Enums\obj\Debug\netcoreapp3.1\CsetAnonymous.Enums.AssemblyInfoInputs.cache
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Enums\obj\Debug\netcoreapp3.1\CsetAnonymous.Enums.AssemblyInfo.cs
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Enums\obj\Debug\netcoreapp3.1\CsetAnonymous.Enums.dll
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Enums\obj\Debug\netcoreapp3.1\CsetAnonymous.Enums.pdb
-C:\Repos\cset_anonymous\CsetAnonymous\CsetAnonymous.Enums\obj\Debug\netcoreapp3.1\CsetAnonymous.Enums.csprojAssemblyReference.cache
