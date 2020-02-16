@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutBlankComponent } from './components/layout/layout-blank/layout-blank.component';
+import { LayoutMainComponent } from './components/layout/layout-main/layout-main.component';
 import { AuthGuard } from './auth/authGuard';
 import { LoginComponent } from './components/login/login.component'
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+
 
 const routes: Routes = [
   {
@@ -13,13 +15,13 @@ const routes: Routes = [
     ]
   },
   {
-    path:'dashboard', component: LayoutBlankComponent, canActivate: [AuthGuard], 
+    path:'dashboard', component: LayoutMainComponent, canActivate: [AuthGuard], 
     children: [
       { path: '', component: DashboardComponent}
     ]
   },
   {
-    path:'', component: LayoutBlankComponent, canActivate: [AuthGuard],
+    path:'', component: LayoutMainComponent, canActivate: [AuthGuard],
     children: [
       { path: '', component: DashboardComponent}
     ]

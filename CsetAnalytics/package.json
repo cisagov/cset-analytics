@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@covalent/core": "^2.1.1",
+    "@swimlane/ngx-charts": "^13.0.2",
+    "bootstrap": "^4.4.1",
     "moment": "^2.24.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
