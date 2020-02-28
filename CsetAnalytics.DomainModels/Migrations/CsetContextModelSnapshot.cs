@@ -322,6 +322,10 @@ namespace CsetAnalytics.DomainModels.Migrations
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.AnalyticDemographic", b =>
                 {
+                    b.HasOne("CsetAnalytics.DomainModels.Models.AnalyticQuestion", "AnalyticQuestion")
+                        .WithMany()
+                        .HasForeignKey("AnalyticQuestionAnalyticDemographicFK");
+
                     b.HasOne("CsetAnalytics.DomainModels.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("AnalyticDemographics")
                         .HasForeignKey("AspNetUserId");

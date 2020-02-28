@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
 using CsetAnalytics.DomainModels.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ using CsetAnalytics.ViewModels;
 using CsetAnalytics.Interfaces.Analytics;
 using CsetAnalytics.Interfaces.Factories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CsetAnalytics.Api.Controllers
 {
@@ -22,7 +22,7 @@ namespace CsetAnalytics.Api.Controllers
         private readonly IAnalyticBusiness _analyticsBusiness;
 
         public AnalyticsController(IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic> demographicViewModelFactory,
-            IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestion> questionViewModelFactory, IAnalyticBusiness analyticsBusiness)
+            IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestion> questionViewModelFactory, IAnalyticBusiness analyticsBusiness )
         {
             _demographicViewModelFactory = demographicViewModelFactory;
             _questionViewModelFactory = questionViewModelFactory;
@@ -56,8 +56,9 @@ namespace CsetAnalytics.Api.Controllers
         public async Task<IActionResult> PostAnalytics([FromBody]AnalyticsViewModel analytics){
             try
             {
-                string username = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 AnalyticDemographic demographic = _demographicViewModelFactory.Create(analytics.Demographics);
+                demographic.AspNetUserId = userId;
                 AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
 
                 List<AnalyticQuestion> questions =
