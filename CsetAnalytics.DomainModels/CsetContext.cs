@@ -27,7 +27,8 @@ namespace CsetAnalytics.DomainModels
             builder.Entity<AnalyticQuestion>().HasOne(c => c.AnalyticDemographic).WithMany(c => c.AnalyticQuestions)
                 .HasForeignKey(f => f.AnalyticDemographicId).HasForeignKey(f => f.AnalyticDemographicId);
             builder.Entity<AnalyticQuestion>().Property(p => p.AnalyticQuestionId).ValueGeneratedOnAdd();
-            builder.Entity<AnalyticDemographic>().HasMany(c=>c.AnalyticQuestions);
+            builder.Entity<AnalyticDemographic>().HasOne(a=>a.ApplicationUser).WithMany(c=>c.AnalyticDemographics).HasForeignKey(f => f.AspNetUserId);
+            builder.Entity<AnalyticDemographic>().HasMany(q => q.AnalyticQuestions);
             builder.Entity<AnalyticDemographic>().Property(p => p.AnalyticDemographicId).ValueGeneratedOnAdd();
         }
 
