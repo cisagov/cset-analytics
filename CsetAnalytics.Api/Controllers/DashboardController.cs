@@ -32,18 +32,22 @@ namespace CsetAnalytics.Api.Controllers
         [Authorize]
         [HttpGet]
         [Route("dashboardChart")]
-        public async ActionResult<DashboardChartData> GetDashBoardChart()
+        public async Task<DashboardChartData> GetDashBoardChart()
         {
+            //TODO Flush out the controller to get the dependency injected viewmodel
+            //create it from the factory and interface and 
+            //IRON OUT the TASK vs ACTIONRESULT to return the object.
+
             try
             {
-                
-                
+                //this.context.AnalyticQuestions.Where(x => x.Assessment_Id == 0);
+                return await Task.Run(() =>{ return new DashboardChartData();});                
             }
             catch (Exception ex)
             {
-                return BadRequest($"Analytics information was not saved: {ex.Message}");
+                //return ex.Message;
+                return null;
             }
         }
     }
-}
 }
