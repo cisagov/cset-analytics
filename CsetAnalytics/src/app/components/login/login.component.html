@@ -5,9 +5,10 @@
     <mat-card-content>
         <form>
             <p>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <input type="text" matInput placeholder="Username" [formControl]="username"
                   [errorStateMatcher]="matcherusername">
+                  <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
                 <mat-error *ngIf="username.hasError('required')">
                   Username is <strong>required</strong>
                 </mat-error>
@@ -15,9 +16,10 @@
             </p>
       
             <p>
-              <mat-form-field>
+              <mat-form-field appearance="outline">
                 <input type="password" matInput placeholder="Password" [formControl]="password"
                   [errorStateMatcher]="matcherpassword">
+                  <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
                 <mat-error *ngIf="password.hasError('required')">
                   Password is <strong>required</strong>
                 </mat-error>

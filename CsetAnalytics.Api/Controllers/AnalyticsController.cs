@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading;
 using System.Threading.Tasks;
 using CsetAnalytics.DomainModels.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ using CsetAnalytics.ViewModels;
 using CsetAnalytics.Interfaces.Analytics;
 using CsetAnalytics.Interfaces.Factories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CsetAnalytics.Api.Controllers
 {
@@ -17,30 +17,29 @@ namespace CsetAnalytics.Api.Controllers
     [ApiController]
     public class AnalyticsController : ControllerBase
     {
-        private readonly IBaseFactoryAsync<AnalyticDemographicViewModel, AnalyticDemographic> _demographicViewModelFactory;
-        private readonly IBaseFactoryAsync<AnalyticQuestionViewModel, AnalyticQuestion> _questionViewModelFactory;
+        private readonly IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic> _demographicViewModelFactory;
+        private readonly IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestion> _questionViewModelFactory;
         private readonly IAnalyticBusiness _analyticsBusiness;
 
-        public AnalyticsController(IBaseFactoryAsync<AnalyticDemographicViewModel, AnalyticDemographic> demographicViewModelFactory,
-            IBaseFactoryAsync<AnalyticQuestionViewModel, AnalyticQuestion> questionViewModelFactory, IAnalyticBusiness analyticsBusiness)
+        public AnalyticsController(IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic> demographicViewModelFactory,
+            IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestion> questionViewModelFactory, IAnalyticBusiness analyticsBusiness )
         {
             _demographicViewModelFactory = demographicViewModelFactory;
             _questionViewModelFactory = questionViewModelFactory;
             _analyticsBusiness = analyticsBusiness;
         }
 
-        [AllowAnonymous]
         [HttpPost]
         [Route("postAnalyticsAnonymously")]
         public async Task<IActionResult> PostAnalyticsAnonymously([FromBody]AnalyticsViewModel analytics)
         {
             try
             {
-                AnalyticDemographic demographic = await _demographicViewModelFactory.CreateAsync(analytics.Demographics);
+                AnalyticDemographic demographic = _demographicViewModelFactory.Create(analytics.Demographics);
                 AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
 
                 List<AnalyticQuestion> questions =
-                    (await _questionViewModelFactory.CreateAsync(analytics.QuestionAnswers.AsQueryable())).ToList();
+                    (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
                 questions.ForEach(x => x.AnalyticDemographicId = rDemographic.AnalyticDemographicId);
                 await _analyticsBusiness.SaveAnalyticQuestions(questions);
                 return Ok(new { message = "Analytics data saved" });
@@ -57,12 +56,13 @@ namespace CsetAnalytics.Api.Controllers
         public async Task<IActionResult> PostAnalytics([FromBody]AnalyticsViewModel analytics){
             try
             {
-                string username = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                AnalyticDemographic demographic = await _demographicViewModelFactory.CreateAsync(analytics.Demographics);
+                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                AnalyticDemographic demographic = _demographicViewModelFactory.Create(analytics.Demographics);
+                demographic.AspNetUserId = userId;
                 AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
 
                 List<AnalyticQuestion> questions =
-                    (await _questionViewModelFactory.CreateAsync(analytics.QuestionAnswers.AsQueryable())).ToList();
+                    (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
                 questions.ForEach(x => x.AnalyticDemographicId = rDemographic.AnalyticDemographicId);
                 await _analyticsBusiness.SaveAnalyticQuestions(questions);
                 return Ok(new { message = "Analytics data saved" });

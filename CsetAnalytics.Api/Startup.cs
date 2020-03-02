@@ -103,13 +103,11 @@ namespace CsetAnalytics.Api
             {
                 o.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuer = true, 
-                    ValidateAudience = true, 
-                    ValidIssuer = Configuration["Tokens:Issuer"], 
-                    ValidAudience = Configuration["Token:Audience"], 
                     ValidateIssuerSigningKey = true, 
-                    IssuerSigningKey = new SymmetricSecurityKey(key), 
-                    ValidateLifetime = true
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false, 
+                    ValidateAudience = false
+                    
                 };
             });
 

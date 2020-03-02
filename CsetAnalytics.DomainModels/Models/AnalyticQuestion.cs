@@ -15,6 +15,7 @@ namespace CsetAnalytics.DomainModels.Models
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
         public string Answer { get; set; }
+        [ForeignKey("AnalyticDemographicId")]
         public int AnalyticDemographicId { get; set; }
         public virtual AnalyticDemographic AnalyticDemographic { get; set; }
     }

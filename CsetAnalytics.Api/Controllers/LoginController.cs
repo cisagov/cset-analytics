@@ -65,7 +65,7 @@ namespace CsetAnalytics.Api.Controllers
                         var roles = await userManager.GetRolesAsync(user);
                         var claims = new[]
                         {
-                            new Claim(JwtRegisteredClaimNames.NameId, user.UserName),
+                            new Claim(JwtRegisteredClaimNames.NameId, user.Id),
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                             new Claim(ClaimTypes.Role, roles.FirstOrDefault())
                         };
@@ -76,7 +76,7 @@ namespace CsetAnalytics.Api.Controllers
                         //   claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, roles.FirstOrDefault()));
                         var keyBytes = Encoding.ASCII.GetBytes(config["Tokens:Key"]);
                         var key = new SymmetricSecurityKey(keyBytes);
-                        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+                        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                         var changePassword = user.ChangePassword;
                         var tokenDescriptor = new SecurityTokenDescriptor

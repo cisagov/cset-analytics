@@ -37,4 +37,8 @@
     margin-bottom: 15px;
     text-align: center;
   }
+
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 1em 0 !important;
+}
   
