@@ -13,6 +13,7 @@ namespace CsetAnalytics.DomainModels
         public DbSet<PasswordHistory> PasswordHistories { get; set; }
         public DbSet<Configuration> Configurations { get; set; }
         
+        public DbSet<Assessments> Assessments { get; set; }
         
         public CsetContext(DbContextOptions<CsetContext> options) : base(options)
         {
@@ -30,6 +31,7 @@ namespace CsetAnalytics.DomainModels
             builder.Entity<AnalyticDemographic>().HasOne(a=>a.ApplicationUser).WithMany(c=>c.AnalyticDemographics).HasForeignKey(f => f.AspNetUserId);
             builder.Entity<AnalyticDemographic>().HasMany(q => q.AnalyticQuestions);
             builder.Entity<AnalyticDemographic>().Property(p => p.AnalyticDemographicId).ValueGeneratedOnAdd();
+            
         }
 
         /// <summary>
