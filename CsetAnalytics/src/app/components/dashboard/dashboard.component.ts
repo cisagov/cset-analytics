@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -72,13 +73,21 @@ export class DashboardComponent implements OnInit {
     domain: ['#5AA454', '#C7B42C', '#AAAAAA']
   };
 
-  constructor() { 
+  dashboardData: any;
+  constructor(private dashboardService: DashboardService) { 
     Object.assign(this, this.multi);
   }
 
   ngOnInit() {
   }
   
+  getDashboardData(){
+    this.dashboardService.getDashboardData().subscribe((data:any)=>{
+        this.dashboardData = data;
+      }      
+    );
+  }
+
   onSelect(event){
     console.log(event);
   }
