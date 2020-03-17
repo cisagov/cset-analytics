@@ -31,7 +31,7 @@ namespace CsetAnalytics.Api.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("dashboardChart")]
+        [Route("GetDashboardChart")]
         public async Task<DashboardChartData> GetDashBoardChart()
         {
             //TODO Flush out the controller to get the dependency injected viewmodel
