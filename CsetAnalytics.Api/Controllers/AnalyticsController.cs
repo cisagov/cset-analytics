@@ -48,7 +48,7 @@ namespace CsetAnalytics.Api.Controllers
                 assessment = await _analyticsBusiness.SaveAssessment(assessment);
 
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
-                questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
+                //TODO UNCOMMENT questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
                 
 
 
@@ -77,7 +77,7 @@ namespace CsetAnalytics.Api.Controllers
                 assessment = await _analyticsBusiness.SaveAssessment(assessment);
 
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
-                questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
+                //TODO UNCOMMENT questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
                 await _analyticsBusiness.SaveAnalyticQuestions(questions);                
                 return Ok(new { message = "Analytics data saved" });
             }

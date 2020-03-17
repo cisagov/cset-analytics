@@ -9,7 +9,7 @@ namespace CsetAnalytics.Interfaces.Dashboard
 {
     public interface IDashboardBusiness
     {
-        Task<List<Series>> GetSectionAnalytics(string section);
+        Task<List<Series>> GetSectorAnalytics(string section);
         Task<List<Series>> GetIndustryAnalytics(string industry);
         Task<List<Series>> GetMyAnalytics(string userId);
     }

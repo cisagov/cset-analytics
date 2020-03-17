@@ -34,11 +34,12 @@ namespace CsetAnalytics.DomainModels
                 .WithOne(e => e.Answer_Lookup).IsRequired()
                 .OnDelete(DeleteBehavior.SetNull);
             
-            builder.Entity<PasswordHistory>().HasOne(c => c.ApplicationUser).WithMany(c => c.PasswordHistories).HasForeignKey(f => f.AspNetUserId).HasForeignKey(f => f.CreatedUserId);                        
-            builder.Entity<AnalyticQuestionAnswer>().HasOne(a => a.Assessment).WithMany(q => q.Questions).HasForeignKey(f => f.Assessment_Id);
+            builder.Entity<PasswordHistory>().HasOne(c => c.ApplicationUser).WithMany(c => c.PasswordHistories).HasForeignKey(f => f.AspNetUserId).HasForeignKey(f => f.CreatedUserId);
+            builder.Entity<AnalyticQuestionAnswer>().Ignore(c => c.Assessment_Id);
+            builder.Entity<AnalyticQuestionAnswer>().HasOne(a => a.Assessment).WithMany(q => q.Questions).HasForeignKey(f => f.Assessment_Id).OnDelete(DeleteBehavior.Cascade);            
             builder.Entity<Assessment>().HasOne(c => c.ApplicationUser).WithMany(c => c.Assessments).HasForeignKey(f=>f.AssessmentCreatorId);
 
-
+            
 
             builder.Entity<AnalyticDemographic>()
             .HasMany(e => e.Assessments)

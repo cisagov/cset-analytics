@@ -44,7 +44,7 @@ namespace CsetAnalytics.Api.Controllers
             try
             {
                 string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var sectionAnalytics = await _dashboardBusiness.GetSectionAnalytics(string.Empty);
+                var sectionAnalytics = await _dashboardBusiness.GetSectorAnalytics(string.Empty);
                 var industryAnalytics = await _dashboardBusiness.GetIndustryAnalytics(string.Empty);
                 var myAnalytics = await _dashboardBusiness.GetMyAnalytics(userId);
                 List<Series> series = new List<Series>(); 

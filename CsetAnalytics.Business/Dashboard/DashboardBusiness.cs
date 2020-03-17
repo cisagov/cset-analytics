@@ -17,8 +17,18 @@ namespace CsetAnalytics.Business.Dashboard
             _context = context;
         }
 
-        public async Task<List<Series>> GetSectionAnalytics(string section)
+        public async Task<List<Series>> GetSectorAnalytics(string section)
         {
+            /*
+             select "Answer_Text", avg(Answer_Count) from
+            (
+            select a."Assessment_Id", q."Answer_Text", count(q."Answer_Text") Answer_Count from "Assessments" a
+	            join "AnalyticDemographics" d on a."AnalyticDemographicId" = d."AnalyticDemographicId"
+	            join "AnalyticQuestionAnswer" q on a."Assessment_Id" = q."Assessment_Id"
+            where d."SectorId" = 1 
+            group by a."Assessment_Id", q."Answer_Text") a
+            group by "Answer_Text"
+            */
             return null;
         }
 

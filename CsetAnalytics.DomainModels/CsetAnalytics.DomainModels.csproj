@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200317230319_NextStepAfterInitial.cs" />
+    <Compile Remove="Migrations\20200317230319_NextStepAfterInitial.Designer.cs" />
+    <Compile Remove="Migrations\20200317230759_NextStepAfterInitial.cs" />
+    <Compile Remove="Migrations\20200317230759_NextStepAfterInitial.Designer.cs" />
+    <Compile Remove="Migrations\20200317231022_NextStepAfterInitial.cs" />
+    <Compile Remove="Migrations\20200317231022_NextStepAfterInitial.Designer.cs" />
+    <Compile Remove="Migrations\20200317231348_NextStepAfterInitial.cs" />
+    <Compile Remove="Migrations\20200317231348_NextStepAfterInitial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />

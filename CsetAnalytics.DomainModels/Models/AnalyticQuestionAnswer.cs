@@ -14,6 +14,8 @@ namespace CsetAnalytics.DomainModels.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AnalyticQuestionId { get; set; }
 
+        [Required]
+        [ForeignKey("Assessment")]
         public int Assessment_Id { get; set; }
 
         public int Question_Or_Requirement_Id { get; set; }
