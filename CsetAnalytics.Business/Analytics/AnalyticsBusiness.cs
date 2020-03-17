@@ -17,12 +17,6 @@ namespace CsetAnalytics.Business.Analytics
             _context = context;
         }
 
-        public async Task<Assessment> SaveAssessment(Assessment assessment)
-        {
-            _context.Assessments.Add(assessment);
-            await _context.SaveChangesAsync();
-            return assessment;
-        }
 
         public async Task<AnalyticDemographic> SaveAnalyticDemographic(AnalyticDemographic demographic)
         {
@@ -33,8 +27,16 @@ namespace CsetAnalytics.Business.Analytics
 
         public async Task SaveAnalyticQuestions(List<AnalyticQuestionAnswer> questions)
         {
-            await _context.AnalyticQuestions.AddRangeAsync(questions);
+            await _context.AnalyticQuestionAnswers.AddRangeAsync(questions);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Assessment> SaveAssessment(Assessment assessment)
+        {
+            _context.Assessments.Add(assessment);
+            await _context.SaveChangesAsync();
+            return assessment;
+        }
+
     }
 }

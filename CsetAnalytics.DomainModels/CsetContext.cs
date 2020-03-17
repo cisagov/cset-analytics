@@ -8,12 +8,17 @@ namespace CsetAnalytics.DomainModels
 {
     public class CsetContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<AnalyticDemographic> AnalyticDemographics { get; set; }
-        public DbSet<AnalyticQuestionAnswer> AnalyticQuestions { get; set; }
+        public virtual DbSet<AnalyticDemographic> AnalyticDemographics { get; set; }
+        public virtual DbSet<AnalyticQuestionAnswer> AnalyticQuestionAnswers { get; set; }
+        public virtual DbSet<Answer_Lookup> Answer_Lookup { get; set; }
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public virtual DbSet<Assessment> Assessments { get; set; }
+        public virtual DbSet<Sector> Sectors { get; set; }
+        public virtual DbSet<Sector_Industry> Sector_Industries { get; set; }
         public DbSet<PasswordHistory> PasswordHistories { get; set; }
         public DbSet<Configuration> Configurations { get; set; }
         
-        public DbSet<Assessment> Assessments { get; set; }
+        
         
         public CsetContext(DbContextOptions<CsetContext> options) : base(options)
         {
@@ -23,29 +28,37 @@ namespace CsetAnalytics.DomainModels
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);            
-            builder.Entity<PasswordHistory>().HasOne(c => c.ApplicationUser).WithMany(c => c.PasswordHistories).HasForeignKey(f => f.AspNetUserId).HasForeignKey(f => f.CreatedUserId);            
-            builder.Entity<AnalyticQuestionAnswer>().Property(p => p.AnalyticQuestionId).ValueGeneratedOnAdd();
-            builder.Entity<AnalyticQuestionAnswer>().HasOne(a => a.Assessment).WithMany(q => q.Questions).HasForeignKey(a => a.Assessment_Id);
-            builder.Entity<Assessment>().Property(p => p.Assessment_Id).ValueGeneratedOnAdd();
-            builder.Entity<Assessment>().HasOne(c => c.ApplicationUser).WithMany(c => c.Assessments).HasForeignKey(f=> f.Assessment_Id).HasForeignKey(f=>f.AssessmentCreatorId);
-            builder.Entity<Assessment>().HasOne(d => d.SECTOR_INDUSTRY).WithMany(a => a.Assessments).HasForeignKey(d => new { d.SectorId, d.IndustryId }).HasForeignKey(a => a.Assessment_Id);            
-            builder.Entity<AnalyticDemographic>().Property(p => p.AnalyticDemographicId).ValueGeneratedOnAdd();
-            builder.Entity<ANSWER_LOOKUP>()
+            base.OnModelCreating(builder);
+            builder.Entity<Answer_Lookup>()
                 .HasMany(e => e.AnalyticQuestionAnswers)
-                .WithOne(e => e.ANSWER_LOOKUP).IsRequired()
+                .WithOne(e => e.Answer_Lookup).IsRequired()
                 .OnDelete(DeleteBehavior.SetNull);
+            
+            builder.Entity<PasswordHistory>().HasOne(c => c.ApplicationUser).WithMany(c => c.PasswordHistories).HasForeignKey(f => f.AspNetUserId).HasForeignKey(f => f.CreatedUserId);                        
+            builder.Entity<AnalyticQuestionAnswer>().HasOne(a => a.Assessment).WithMany(q => q.Questions).HasForeignKey(f => f.Assessment_Id);
+            builder.Entity<Assessment>().HasOne(c => c.ApplicationUser).WithMany(c => c.Assessments).HasForeignKey(f=>f.AssessmentCreatorId);
 
+
+
+            builder.Entity<AnalyticDemographic>()
+            .HasMany(e => e.Assessments)
+            .WithOne(e => e.AnalyticDemographic)
+            .HasForeignKey(e => e.AnalyticDemographicId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<Answer_Lookup>()
+                .HasMany(e => e.AnalyticQuestionAnswers)
+                .WithOne(e => e.Answer_Lookup)
+                .HasForeignKey(e => e.Answer_Text)
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<Sector_Industry>()
                 .HasKey(c => new { c.SectorId, c.IndustryId });
             builder.Entity<Sector_Industry>()                
-                .HasMany(e => e.Assessments)      
-                .WithOne(e => e.SECTOR_INDUSTRY)
+                .HasMany(e => e.AnalyticDemographics)      
+                .WithOne(e => e.Sector_Industry)
                 .HasForeignKey(e => new { e.SectorId, e.IndustryId })
                 .OnDelete(DeleteBehavior.SetNull);
-
-
             builder.Entity<ApplicationUser>()
                 .HasMany(e => e.Assessments)
                 .WithOne(e => e.ApplicationUser)

@@ -34,40 +34,11 @@ namespace CsetAnalytics.DomainModels.Models
         [Column(TypeName = "timestamptz")]
         public DateTime Assessment_Date { get; set; }
 
-        [StringLength(100)]
-        public string Assets { get; set; }
+        public int AnalyticDemographicId { get; set; }
 
-        [StringLength(100)]
-        public string Size { get; set; }
-
-        public int? SectorId { get; set; }
-
-        public int? IndustryId { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnalyticQuestionAnswer> AnalyticQuestionAnswers { get; set; }
-
-        public virtual Sector_Industry SECTOR_INDUSTRY { get; set; }
-        
         public virtual ApplicationUser ApplicationUser { get; internal set; }
         public virtual ICollection<AnalyticQuestionAnswer> Questions { get; set; }
-    }
-
-    public partial class ANSWER_LOOKUP
-    {        
-        public ANSWER_LOOKUP()
-        {
-            AnalyticQuestionAnswers = new HashSet<AnalyticQuestionAnswer>();
-        }
-
-        [Key]
-        [StringLength(50)]
-        public string Answer_Text { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string Answer_Full_Name { get; set; }
-        
-        public virtual ICollection<AnalyticQuestionAnswer> AnalyticQuestionAnswers { get; set; }
+        public virtual AnalyticDemographic AnalyticDemographic { get; set; }
     }
 }

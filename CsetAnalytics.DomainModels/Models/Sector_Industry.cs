@@ -9,16 +9,16 @@ namespace CsetAnalytics.DomainModels.Models
 {
 
 
-    [Table("SECTOR")]
-    public partial class SECTOR
+    [Table("Sector")]
+    public partial class Sector
     {
 
-        public SECTOR()
+        public Sector()
         {
             Sector_Industry = new HashSet<Sector_Industry>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SectorId { get; set; }
 
         [Required]
@@ -34,11 +34,10 @@ namespace CsetAnalytics.DomainModels.Models
 
         public Sector_Industry()
         {
-            Assessments = new HashSet<Assessment>();
+            AnalyticDemographics = new HashSet<AnalyticDemographic>();
         }
 
-        
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SectorId { get; set; }
 
         
@@ -49,9 +48,8 @@ namespace CsetAnalytics.DomainModels.Models
         [StringLength(150)]
         public string IndustryName { get; set; }
 
+        public virtual ICollection<AnalyticDemographic> AnalyticDemographics { get; set; }
 
-        public virtual ICollection<Assessment> Assessments { get; set; }
-
-        public virtual SECTOR SECTOR { get; set; }
+        public virtual Sector Sector { get; set; }
     }
 }

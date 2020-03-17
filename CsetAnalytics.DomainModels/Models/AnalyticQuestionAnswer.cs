@@ -11,19 +11,19 @@ namespace CsetAnalytics.DomainModels.Models
     {
         public AnalyticQuestionAnswer() { }
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AnalyticQuestionId { get; set; }
-        public int QuestionId { get; set; }
-        public string QuestionText { get; set; }
 
         public int Assessment_Id { get; set; }
-        public virtual Assessment Assessment { get; set; }
 
         public int Question_Or_Requirement_Id { get; set; }
 
         [Required]
         [StringLength(50)]
         public string Answer_Text { get; set; }
-        public virtual ANSWER_LOOKUP ANSWER_LOOKUP { get; set; }
+
+        [Required]
+        public string QuestionText { get; set; }
 
         public Guid? Component_Guid { get; set; }
 
@@ -35,6 +35,10 @@ namespace CsetAnalytics.DomainModels.Models
         public bool Is_Component { get; set; }
 
         public bool Is_Framework { get; set; }
+
+        public virtual Answer_Lookup Answer_Lookup { get; set; }
+
+        public virtual Assessment Assessment { get; set; }
     }
         
 
