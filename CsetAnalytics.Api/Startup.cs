@@ -118,8 +118,9 @@ namespace CsetAnalytics.Api
             //Factories
             services.AddTransient<IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic>, AnalyticDemographicModelFactory>();
             services.AddTransient<IBaseFactory<AnalyticDemographic, AnalyticDemographicViewModel>, AnalyticDemographicViewModelFactory>();
-            services.AddTransient<IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestion>, AnalyticQuestionModelFactory>();
-            services.AddTransient<IBaseFactory<AnalyticQuestion, AnalyticQuestionViewModel>, AnalyticQuestionViewModelFactory>();
+            services.AddTransient<IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestionAnswer>, AnalyticQuestionModelFactory>();
+            services.AddTransient<IBaseFactory<AnalyticQuestionAnswer, AnalyticQuestionViewModel>, AnalyticQuestionViewModelFactory>();
+            services.AddTransient<IBaseFactory<AnalyticAssessmentViewModel, Assessment>, AnalyticAssessmentFactory>();
 
 
         }

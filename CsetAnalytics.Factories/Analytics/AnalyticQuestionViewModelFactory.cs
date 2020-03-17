@@ -11,7 +11,7 @@ using CsetAnalytics.ViewModels;
 
 namespace CsetAnalytics.Factories.Analytics
 {
-    public class AnalyticQuestionViewModelFactory : IBaseFactory<AnalyticQuestion, AnalyticQuestionViewModel>
+    public class AnalyticQuestionViewModelFactory : IBaseFactory<AnalyticQuestionAnswer, AnalyticQuestionViewModel>
     {
         private readonly IMapper _mapper;
 
@@ -20,12 +20,12 @@ namespace CsetAnalytics.Factories.Analytics
             _mapper = mapper;
         }
 
-        public AnalyticQuestionViewModel Create(AnalyticQuestion question)
+        public AnalyticQuestionViewModel Create(AnalyticQuestionAnswer question)
         {
             return _mapper.Map<AnalyticQuestionViewModel>(question);
         }
 
-        public IQueryable<AnalyticQuestionViewModel> Create(IQueryable<AnalyticQuestion> questions)
+        public IQueryable<AnalyticQuestionViewModel> Create(IQueryable<AnalyticQuestionAnswer> questions)
         {
             var config = new MapperConfiguration(cfg => cfg.DisableConstructorMapping());
             return questions.ProjectTo<AnalyticQuestionViewModel>(config);

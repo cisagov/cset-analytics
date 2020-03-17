@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CsetAnalytics.DomainModels.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class NextStepAfterInitial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,29 +80,6 @@ namespace CsetAnalytics.DomainModels.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Configuration", x => x.ConfigurationId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AnalyticQuestion",
-                schema: "public",
-                columns: table => new
-                {
-                    AnalyticQuestionId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    QuestionId = table.Column<int>(nullable: false),
-                    QuestionText = table.Column<string>(nullable: true),
-                    Answer = table.Column<string>(nullable: true),
-                    AnalyticDemographicId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AnalyticQuestion", x => x.AnalyticQuestionId);
-                    table.ForeignKey(
-                        name: "FK_AnalyticQuestion_AnalyticDemographics_AnalyticDemographicId",
-                        column: x => x.AnalyticDemographicId,
-                        principalTable: "AnalyticDemographics",
-                        principalColumn: "AnalyticDemographicId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,6 +189,33 @@ namespace CsetAnalytics.DomainModels.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Assessment",
+                schema: "public",
+                columns: table => new
+                {
+                    Assessment_Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AnalyticDemographicId = table.Column<int>(nullable: false),
+                    ApplicationUser_Id = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assessment", x => x.Assessment_Id);
+                    table.ForeignKey(
+                        name: "FK_Assessment_AspNetUsers_ApplicationUser_Id",
+                        column: x => x.ApplicationUser_Id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Assessment_AnalyticDemographics_Assessment_Id",
+                        column: x => x.Assessment_Id,
+                        principalTable: "AnalyticDemographics",
+                        principalColumn: "AnalyticDemographicId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PasswordHistory",
                 schema: "public",
                 columns: table => new
@@ -232,6 +236,37 @@ namespace CsetAnalytics.DomainModels.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AnalyticQuestionAnswer",
+                schema: "public",
+                columns: table => new
+                {
+                    AnalyticQuestionId = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    QuestionId = table.Column<int>(nullable: false),
+                    QuestionText = table.Column<string>(nullable: true),
+                    Answer = table.Column<string>(nullable: true),
+                    Assessment_Id = table.Column<int>(nullable: false),
+                    AnalyticDemographicId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AnalyticQuestionAnswer", x => x.AnalyticQuestionId);
+                    table.ForeignKey(
+                        name: "FK_AnalyticQuestionAnswer_AnalyticDemographics_AnalyticDemogra~",
+                        column: x => x.AnalyticDemographicId,
+                        principalTable: "AnalyticDemographics",
+                        principalColumn: "AnalyticDemographicId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AnalyticQuestionAnswer_Assessment_Assessment_Id",
+                        column: x => x.Assessment_Id,
+                        principalSchema: "public",
+                        principalTable: "Assessment",
+                        principalColumn: "Assessment_Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -272,10 +307,22 @@ namespace CsetAnalytics.DomainModels.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnalyticQuestion_AnalyticDemographicId",
+                name: "IX_AnalyticQuestionAnswer_AnalyticDemographicId",
                 schema: "public",
-                table: "AnalyticQuestion",
+                table: "AnalyticQuestionAnswer",
                 column: "AnalyticDemographicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AnalyticQuestionAnswer_Assessment_Id",
+                schema: "public",
+                table: "AnalyticQuestionAnswer",
+                column: "Assessment_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assessment_ApplicationUser_Id",
+                schema: "public",
+                table: "Assessment",
+                column: "ApplicationUser_Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PasswordHistory_CreatedUserId",
@@ -302,7 +349,7 @@ namespace CsetAnalytics.DomainModels.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AnalyticQuestion",
+                name: "AnalyticQuestionAnswer",
                 schema: "public");
 
             migrationBuilder.DropTable(
@@ -317,10 +364,14 @@ namespace CsetAnalytics.DomainModels.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AnalyticDemographics");
+                name: "Assessment",
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "AnalyticDemographics");
         }
     }
 }

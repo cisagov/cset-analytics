@@ -15,10 +15,7 @@ namespace CsetAnalytics.DomainModels.Models
         public string SectorName { get; set; }
         public string Size { get; set; }
         public string AssetValue { get; set; }
-        [ForeignKey("ApplicationUser")]
-        public string AspNetUserId { get; set; }
-
-        public virtual ICollection<AnalyticQuestion> AnalyticQuestions { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual ICollection<AnalyticQuestionAnswer> AnalyticQuestions { get; set; }        
+        public virtual ICollection<Assessment> Assessments { get; set; }
     }
 }

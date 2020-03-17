@@ -8,10 +8,8 @@ namespace CsetAnalytics.DomainModels.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        public bool ChangePassword { get; set; }
-        [ForeignKey("AnalyticDemographicFK")]
-        public AnalyticDemographic AnalyticDemographic { get; set; }
-        public virtual ICollection<PasswordHistory> PasswordHistories { get; set; }
-        public ICollection<AnalyticDemographic> AnalyticDemographics { get; set; }
+        public bool ChangePassword { get; set; }        
+        public virtual ICollection<PasswordHistory> PasswordHistories { get; set; }        
+        public virtual ICollection<Assessment> Assessments { get; internal set; }
     }
 }

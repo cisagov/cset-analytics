@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CsetAnalytics.DomainModels.Migrations
 {
     [DbContext(typeof(CsetContext))]
-    [Migration("20200228170956_AddApplicationUserToAnalyticDemographics")]
-    partial class AddApplicationUserToAnalyticDemographics
+    [Migration("20200316235904_NextStepAfterInitial")]
+    partial class NextStepAfterInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,6 @@ namespace CsetAnalytics.DomainModels.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("AspNetUserId")
-                        .HasColumnType("text");
-
                     b.Property<string>("AssetValue")
                         .HasColumnType("text");
 
@@ -45,23 +42,24 @@ namespace CsetAnalytics.DomainModels.Migrations
 
                     b.HasKey("AnalyticDemographicId");
 
-                    b.HasIndex("AspNetUserId");
-
                     b.ToTable("AnalyticDemographics");
                 });
 
-            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.AnalyticQuestion", b =>
+            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.AnalyticQuestionAnswer", b =>
                 {
                     b.Property<int>("AnalyticQuestionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AnalyticDemographicId")
+                    b.Property<int?>("AnalyticDemographicId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Answer")
                         .HasColumnType("text");
+
+                    b.Property<int>("Assessment_Id")
+                        .HasColumnType("integer");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("integer");
@@ -73,7 +71,9 @@ namespace CsetAnalytics.DomainModels.Migrations
 
                     b.HasIndex("AnalyticDemographicId");
 
-                    b.ToTable("AnalyticQuestion","public");
+                    b.HasIndex("Assessment_Id");
+
+                    b.ToTable("AnalyticQuestionAnswer","public");
                 });
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.ApplicationUser", b =>
@@ -82,9 +82,6 @@ namespace CsetAnalytics.DomainModels.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("AnalyticDemographicFK")
                         .HasColumnType("integer");
 
                     b.Property<bool>("ChangePassword")
@@ -136,8 +133,6 @@ namespace CsetAnalytics.DomainModels.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnalyticDemographicFK");
-
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -146,6 +141,26 @@ namespace CsetAnalytics.DomainModels.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.Assessment", b =>
+                {
+                    b.Property<int>("Assessment_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("AnalyticDemographicId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ApplicationUser_Id")
+                        .HasColumnType("text");
+
+                    b.HasKey("Assessment_Id");
+
+                    b.HasIndex("ApplicationUser_Id");
+
+                    b.ToTable("Assessment","public");
                 });
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.Configuration", b =>
@@ -322,27 +337,30 @@ namespace CsetAnalytics.DomainModels.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.AnalyticDemographic", b =>
+            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.AnalyticQuestionAnswer", b =>
                 {
-                    b.HasOne("CsetAnalytics.DomainModels.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("AnalyticDemographics")
-                        .HasForeignKey("AspNetUserId");
-                });
-
-            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.AnalyticQuestion", b =>
-                {
-                    b.HasOne("CsetAnalytics.DomainModels.Models.AnalyticDemographic", "AnalyticDemographic")
+                    b.HasOne("CsetAnalytics.DomainModels.Models.AnalyticDemographic", null)
                         .WithMany("AnalyticQuestions")
-                        .HasForeignKey("AnalyticDemographicId")
+                        .HasForeignKey("AnalyticDemographicId");
+
+                    b.HasOne("CsetAnalytics.DomainModels.Models.Assessment", "Assessment")
+                        .WithMany("Questions")
+                        .HasForeignKey("Assessment_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.ApplicationUser", b =>
+            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.Assessment", b =>
                 {
+                    b.HasOne("CsetAnalytics.DomainModels.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("Assessments")
+                        .HasForeignKey("ApplicationUser_Id");
+
                     b.HasOne("CsetAnalytics.DomainModels.Models.AnalyticDemographic", "AnalyticDemographic")
-                        .WithMany()
-                        .HasForeignKey("AnalyticDemographicFK");
+                        .WithMany("Assessments")
+                        .HasForeignKey("Assessment_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.PasswordHistory", b =>

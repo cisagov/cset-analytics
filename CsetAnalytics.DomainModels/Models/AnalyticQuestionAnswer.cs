@@ -6,17 +6,16 @@ using System.Text;
 
 namespace CsetAnalytics.DomainModels.Models
 {
-    [Table("AnalyticQuestion", Schema = "public")]
-    public class AnalyticQuestion
+    [Table("AnalyticQuestionAnswer", Schema = "public")]
+    public class AnalyticQuestionAnswer
     {
-        public AnalyticQuestion() { }
+        public AnalyticQuestionAnswer() { }
         [Key]
         public int AnalyticQuestionId { get; set; }
         public int QuestionId { get; set; }
         public string QuestionText { get; set; }
         public string Answer { get; set; }
-        [ForeignKey("AnalyticDemographicId")]
-        public int AnalyticDemographicId { get; set; }
-        public virtual AnalyticDemographic AnalyticDemographic { get; set; }
+        public int Assessment_Id { get; set; }
+        public virtual Assessment Assessment { get; set; }
     }
 }

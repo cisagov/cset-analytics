@@ -9,11 +9,11 @@ namespace CsetAnalytics.DomainModels
     public class CsetContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<AnalyticDemographic> AnalyticDemographics { get; set; }
-        public DbSet<AnalyticQuestion> AnalyticQuestions { get; set; }
+        public DbSet<AnalyticQuestionAnswer> AnalyticQuestions { get; set; }
         public DbSet<PasswordHistory> PasswordHistories { get; set; }
         public DbSet<Configuration> Configurations { get; set; }
         
-        public DbSet<Assessments> Assessments { get; set; }
+        public DbSet<Assessment> Assessments { get; set; }
         
         public CsetContext(DbContextOptions<CsetContext> options) : base(options)
         {
@@ -23,15 +23,14 @@ namespace CsetAnalytics.DomainModels
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-            builder.Entity<PasswordHistory>().HasOne(c => c.ApplicationUser).WithMany(c => c.PasswordHistories).HasForeignKey(f => f.AspNetUserId).HasForeignKey(f => f.CreatedUserId);
-            builder.Entity<AnalyticQuestion>().HasOne(c => c.AnalyticDemographic).WithMany(c => c.AnalyticQuestions)
-                .HasForeignKey(f => f.AnalyticDemographicId).HasForeignKey(f => f.AnalyticDemographicId);
-            builder.Entity<AnalyticQuestion>().Property(p => p.AnalyticQuestionId).ValueGeneratedOnAdd();
-            builder.Entity<AnalyticDemographic>().HasOne(a=>a.ApplicationUser).WithMany(c=>c.AnalyticDemographics).HasForeignKey(f => f.AspNetUserId);
-            builder.Entity<AnalyticDemographic>().HasMany(q => q.AnalyticQuestions);
+            base.OnModelCreating(builder);            
+            builder.Entity<PasswordHistory>().HasOne(c => c.ApplicationUser).WithMany(c => c.PasswordHistories).HasForeignKey(f => f.AspNetUserId).HasForeignKey(f => f.CreatedUserId);            
+            builder.Entity<AnalyticQuestionAnswer>().Property(p => p.AnalyticQuestionId).ValueGeneratedOnAdd();
+            builder.Entity<AnalyticQuestionAnswer>().HasOne(a => a.Assessment).WithMany(q => q.Questions).HasForeignKey(a => a.Assessment_Id);
+            builder.Entity<Assessment>().Property(p => p.Assessment_Id).ValueGeneratedOnAdd();
+            builder.Entity<Assessment>().HasOne(c => c.ApplicationUser).WithMany(c => c.Assessments).HasForeignKey(f=> f.Assessment_Id).HasForeignKey(f=>f.ApplicationUser_Id);
+            builder.Entity<Assessment>().HasOne(d => d.AnalyticDemographic).WithMany(a => a.Assessments).HasForeignKey(d => d.AnalyticDemographicId).HasForeignKey(a => a.Assessment_Id);            
             builder.Entity<AnalyticDemographic>().Property(p => p.AnalyticDemographicId).ValueGeneratedOnAdd();
-            
         }
 
         /// <summary>
