@@ -44,7 +44,8 @@ namespace CsetAnalytics.Api.Controllers
                 AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
 
                 Assessment assessment = _assessmentViewModelFactory.Create(analytics.Assessment);
-                assessment.AnalyticDemographicId = rDemographic.AnalyticDemographicId;
+                assessment.SectorId = rDemographic.SectorId;
+                assessment.IndustryId = rDemographic.IndustryId;
                 assessment = await _analyticsBusiness.SaveAssessment(assessment);
 
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
@@ -72,8 +73,9 @@ namespace CsetAnalytics.Api.Controllers
                 AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
 
                 Assessment assessment = _assessmentViewModelFactory.Create(analytics.Assessment);
-                assessment.AnalyticDemographicId = rDemographic.AnalyticDemographicId;
-                assessment.ApplicationUser_Id = userId;
+                assessment.SectorId = rDemographic.SectorId;
+                assessment.IndustryId = rDemographic.IndustryId;
+                assessment.AssessmentCreatorId = userId;
                 assessment = await _analyticsBusiness.SaveAssessment(assessment);
 
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();

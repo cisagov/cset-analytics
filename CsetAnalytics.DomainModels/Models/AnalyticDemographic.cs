@@ -15,7 +15,9 @@ namespace CsetAnalytics.DomainModels.Models
         public string SectorName { get; set; }
         public string Size { get; set; }
         public string AssetValue { get; set; }
-        public virtual ICollection<AnalyticQuestionAnswer> AnalyticQuestions { get; set; }        
+        
         public virtual ICollection<Assessment> Assessments { get; set; }
+        public int SectorId { get; set; }
+        public int IndustryId { get; set; }
     }
 }

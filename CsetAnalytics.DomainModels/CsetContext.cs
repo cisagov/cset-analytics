@@ -28,9 +28,29 @@ namespace CsetAnalytics.DomainModels
             builder.Entity<AnalyticQuestionAnswer>().Property(p => p.AnalyticQuestionId).ValueGeneratedOnAdd();
             builder.Entity<AnalyticQuestionAnswer>().HasOne(a => a.Assessment).WithMany(q => q.Questions).HasForeignKey(a => a.Assessment_Id);
             builder.Entity<Assessment>().Property(p => p.Assessment_Id).ValueGeneratedOnAdd();
-            builder.Entity<Assessment>().HasOne(c => c.ApplicationUser).WithMany(c => c.Assessments).HasForeignKey(f=> f.Assessment_Id).HasForeignKey(f=>f.ApplicationUser_Id);
-            builder.Entity<Assessment>().HasOne(d => d.AnalyticDemographic).WithMany(a => a.Assessments).HasForeignKey(d => d.AnalyticDemographicId).HasForeignKey(a => a.Assessment_Id);            
+            builder.Entity<Assessment>().HasOne(c => c.ApplicationUser).WithMany(c => c.Assessments).HasForeignKey(f=> f.Assessment_Id).HasForeignKey(f=>f.AssessmentCreatorId);
+            builder.Entity<Assessment>().HasOne(d => d.SECTOR_INDUSTRY).WithMany(a => a.Assessments).HasForeignKey(d => new { d.SectorId, d.IndustryId }).HasForeignKey(a => a.Assessment_Id);            
             builder.Entity<AnalyticDemographic>().Property(p => p.AnalyticDemographicId).ValueGeneratedOnAdd();
+            builder.Entity<ANSWER_LOOKUP>()
+                .HasMany(e => e.AnalyticQuestionAnswers)
+                .WithOne(e => e.ANSWER_LOOKUP).IsRequired()
+                .OnDelete(DeleteBehavior.SetNull);
+
+
+            builder.Entity<Sector_Industry>()
+                .HasKey(c => new { c.SectorId, c.IndustryId });
+            builder.Entity<Sector_Industry>()                
+                .HasMany(e => e.Assessments)      
+                .WithOne(e => e.SECTOR_INDUSTRY)
+                .HasForeignKey(e => new { e.SectorId, e.IndustryId })
+                .OnDelete(DeleteBehavior.SetNull);
+
+
+            builder.Entity<ApplicationUser>()
+                .HasMany(e => e.Assessments)
+                .WithOne(e => e.ApplicationUser)
+                .HasForeignKey(e => e.AssessmentCreatorId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
         /// <summary>

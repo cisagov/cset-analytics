@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CsetAnalytics.DomainModels.Migrations
 {
     [DbContext(typeof(CsetContext))]
-    [Migration("20200316235904_NextStepAfterInitial")]
+    [Migration("20200317200043_NextStepAfterInitial")]
     partial class NextStepAfterInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,22 @@ namespace CsetAnalytics.DomainModels.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.ANSWER_LOOKUP", b =>
+                {
+                    b.Property<string>("Answer_Text")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Answer_Full_Name")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Answer_Text");
+
+                    b.ToTable("ANSWER_LOOKUP");
+                });
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.AnalyticDemographic", b =>
                 {
@@ -31,8 +47,14 @@ namespace CsetAnalytics.DomainModels.Migrations
                     b.Property<string>("AssetValue")
                         .HasColumnType("text");
 
+                    b.Property<int>("IndustryId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("IndustryName")
                         .HasColumnType("text");
+
+                    b.Property<int>("SectorId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("SectorName")
                         .HasColumnType("text");
@@ -52,14 +74,36 @@ namespace CsetAnalytics.DomainModels.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("AnalyticDemographicId")
-                        .HasColumnType("integer");
+                    b.Property<string>("ANSWER_LOOKUPAnswer_Text")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)");
 
-                    b.Property<string>("Answer")
-                        .HasColumnType("text");
+                    b.Property<string>("Answer_Text")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
 
                     b.Property<int>("Assessment_Id")
                         .HasColumnType("integer");
+
+                    b.Property<int?>("Assessment_Id1")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid?>("Component_Guid")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Custom_Question_Guid")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<bool>("Is_Component")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Is_Framework")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("Is_Requirement")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("QuestionId")
                         .HasColumnType("integer");
@@ -67,11 +111,16 @@ namespace CsetAnalytics.DomainModels.Migrations
                     b.Property<string>("QuestionText")
                         .HasColumnType("text");
 
+                    b.Property<int>("Question_Or_Requirement_Id")
+                        .HasColumnType("integer");
+
                     b.HasKey("AnalyticQuestionId");
 
-                    b.HasIndex("AnalyticDemographicId");
+                    b.HasIndex("ANSWER_LOOKUPAnswer_Text");
 
                     b.HasIndex("Assessment_Id");
+
+                    b.HasIndex("Assessment_Id1");
 
                     b.ToTable("AnalyticQuestionAnswer","public");
                 });
@@ -150,17 +199,51 @@ namespace CsetAnalytics.DomainModels.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AnalyticDemographicId")
+                    b.Property<string>("Alias")
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("AnalyticDemographicId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("ApplicationUser_Id")
+                    b.Property<DateTime>("AssessmentCreatedDate")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("AssessmentCreatorId")
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("Assessment_Date")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<string>("Assessment_GUID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Assets")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int?>("IndustryId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("LastAccessedDate")
+                        .HasColumnType("timestamptz");
+
+                    b.Property<int?>("SectorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Size")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("Assessment_Id");
 
-                    b.HasIndex("ApplicationUser_Id");
+                    b.HasIndex("AnalyticDemographicId");
 
-                    b.ToTable("Assessment","public");
+                    b.HasIndex("AssessmentCreatorId");
+
+                    b.HasIndex("SectorId", "IndustryId");
+
+                    b.ToTable("Assessments","public");
                 });
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.Configuration", b =>
@@ -205,6 +288,39 @@ namespace CsetAnalytics.DomainModels.Migrations
                     b.HasIndex("CreatedUserId");
 
                     b.ToTable("PasswordHistory","public");
+                });
+
+            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.SECTOR", b =>
+                {
+                    b.Property<int>("SectorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SectorName")
+                        .IsRequired()
+                        .HasColumnType("character varying(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("SectorId");
+
+                    b.ToTable("SECTOR");
+                });
+
+            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.Sector_Industry", b =>
+                {
+                    b.Property<int>("SectorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IndustryId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("IndustryName")
+                        .IsRequired()
+                        .HasColumnType("character varying(150)")
+                        .HasMaxLength(150);
+
+                    b.HasKey("SectorId", "IndustryId");
+
+                    b.ToTable("Sector_Industry");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -339,28 +455,38 @@ namespace CsetAnalytics.DomainModels.Migrations
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.AnalyticQuestionAnswer", b =>
                 {
-                    b.HasOne("CsetAnalytics.DomainModels.Models.AnalyticDemographic", null)
-                        .WithMany("AnalyticQuestions")
-                        .HasForeignKey("AnalyticDemographicId");
+                    b.HasOne("CsetAnalytics.DomainModels.Models.ANSWER_LOOKUP", "ANSWER_LOOKUP")
+                        .WithMany("AnalyticQuestionAnswers")
+                        .HasForeignKey("ANSWER_LOOKUPAnswer_Text")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("CsetAnalytics.DomainModels.Models.Assessment", "Assessment")
                         .WithMany("Questions")
                         .HasForeignKey("Assessment_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CsetAnalytics.DomainModels.Models.Assessment", null)
+                        .WithMany("AnalyticQuestionAnswers")
+                        .HasForeignKey("Assessment_Id1");
                 });
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.Assessment", b =>
                 {
+                    b.HasOne("CsetAnalytics.DomainModels.Models.AnalyticDemographic", null)
+                        .WithMany("Assessments")
+                        .HasForeignKey("AnalyticDemographicId");
+
                     b.HasOne("CsetAnalytics.DomainModels.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Assessments")
-                        .HasForeignKey("ApplicationUser_Id");
+                        .HasForeignKey("AssessmentCreatorId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
-                    b.HasOne("CsetAnalytics.DomainModels.Models.AnalyticDemographic", "AnalyticDemographic")
+                    b.HasOne("CsetAnalytics.DomainModels.Models.Sector_Industry", "SECTOR_INDUSTRY")
                         .WithMany("Assessments")
-                        .HasForeignKey("Assessment_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SectorId", "IndustryId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("CsetAnalytics.DomainModels.Models.PasswordHistory", b =>
@@ -368,6 +494,15 @@ namespace CsetAnalytics.DomainModels.Migrations
                     b.HasOne("CsetAnalytics.DomainModels.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("PasswordHistories")
                         .HasForeignKey("CreatedUserId");
+                });
+
+            modelBuilder.Entity("CsetAnalytics.DomainModels.Models.Sector_Industry", b =>
+                {
+                    b.HasOne("CsetAnalytics.DomainModels.Models.SECTOR", "SECTOR")
+                        .WithMany("Sector_Industry")
+                        .HasForeignKey("SectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

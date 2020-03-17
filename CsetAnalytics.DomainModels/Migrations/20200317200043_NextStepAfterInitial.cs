@@ -20,11 +20,25 @@ namespace CsetAnalytics.DomainModels.Migrations
                     IndustryName = table.Column<string>(nullable: true),
                     SectorName = table.Column<string>(nullable: true),
                     Size = table.Column<string>(nullable: true),
-                    AssetValue = table.Column<string>(nullable: true)
+                    AssetValue = table.Column<string>(nullable: true),
+                    SectorId = table.Column<int>(nullable: false),
+                    IndustryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AnalyticDemographics", x => x.AnalyticDemographicId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ANSWER_LOOKUP",
+                columns: table => new
+                {
+                    Answer_Text = table.Column<string>(maxLength: 50, nullable: false),
+                    Answer_Full_Name = table.Column<string>(maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ANSWER_LOOKUP", x => x.Answer_Text);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,6 +79,18 @@ namespace CsetAnalytics.DomainModels.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SECTOR",
+                columns: table => new
+                {
+                    SectorId = table.Column<int>(nullable: false),
+                    SectorName = table.Column<string>(maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SECTOR", x => x.SectorId);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,33 +215,6 @@ namespace CsetAnalytics.DomainModels.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Assessment",
-                schema: "public",
-                columns: table => new
-                {
-                    Assessment_Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    AnalyticDemographicId = table.Column<int>(nullable: false),
-                    ApplicationUser_Id = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Assessment", x => x.Assessment_Id);
-                    table.ForeignKey(
-                        name: "FK_Assessment_AspNetUsers_ApplicationUser_Id",
-                        column: x => x.ApplicationUser_Id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Assessment_AnalyticDemographics_Assessment_Id",
-                        column: x => x.Assessment_Id,
-                        principalTable: "AnalyticDemographics",
-                        principalColumn: "AnalyticDemographicId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PasswordHistory",
                 schema: "public",
                 columns: table => new
@@ -239,6 +238,67 @@ namespace CsetAnalytics.DomainModels.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sector_Industry",
+                columns: table => new
+                {
+                    SectorId = table.Column<int>(nullable: false),
+                    IndustryId = table.Column<int>(nullable: false),
+                    IndustryName = table.Column<string>(maxLength: 150, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sector_Industry", x => new { x.SectorId, x.IndustryId });
+                    table.ForeignKey(
+                        name: "FK_Sector_Industry_SECTOR_SectorId",
+                        column: x => x.SectorId,
+                        principalTable: "SECTOR",
+                        principalColumn: "SectorId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Assessments",
+                schema: "public",
+                columns: table => new
+                {
+                    Assessment_Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AssessmentCreatedDate = table.Column<DateTime>(type: "timestamptz", nullable: false),
+                    AssessmentCreatorId = table.Column<string>(nullable: true),
+                    LastAccessedDate = table.Column<DateTime>(type: "timestamptz", nullable: true),
+                    Alias = table.Column<string>(maxLength: 50, nullable: true),
+                    Assessment_GUID = table.Column<string>(nullable: true),
+                    Assessment_Date = table.Column<DateTime>(type: "timestamptz", nullable: false),
+                    Assets = table.Column<string>(maxLength: 100, nullable: true),
+                    Size = table.Column<string>(maxLength: 100, nullable: true),
+                    SectorId = table.Column<int>(nullable: true),
+                    IndustryId = table.Column<int>(nullable: true),
+                    AnalyticDemographicId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assessments", x => x.Assessment_Id);
+                    table.ForeignKey(
+                        name: "FK_Assessments_AnalyticDemographics_AnalyticDemographicId",
+                        column: x => x.AnalyticDemographicId,
+                        principalTable: "AnalyticDemographics",
+                        principalColumn: "AnalyticDemographicId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Assessments_AspNetUsers_AssessmentCreatorId",
+                        column: x => x.AssessmentCreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Assessments_Sector_Industry_SectorId_IndustryId",
+                        columns: x => new { x.SectorId, x.IndustryId },
+                        principalTable: "Sector_Industry",
+                        principalColumns: new[] { "SectorId", "IndustryId" },
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AnalyticQuestionAnswer",
                 schema: "public",
                 columns: table => new
@@ -247,26 +307,40 @@ namespace CsetAnalytics.DomainModels.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     QuestionId = table.Column<int>(nullable: false),
                     QuestionText = table.Column<string>(nullable: true),
-                    Answer = table.Column<string>(nullable: true),
                     Assessment_Id = table.Column<int>(nullable: false),
-                    AnalyticDemographicId = table.Column<int>(nullable: true)
+                    Question_Or_Requirement_Id = table.Column<int>(nullable: false),
+                    Answer_Text = table.Column<string>(maxLength: 50, nullable: false),
+                    ANSWER_LOOKUPAnswer_Text = table.Column<string>(nullable: false),
+                    Component_Guid = table.Column<Guid>(nullable: true),
+                    Custom_Question_Guid = table.Column<string>(maxLength: 50, nullable: true),
+                    Is_Requirement = table.Column<bool>(nullable: false),
+                    Is_Component = table.Column<bool>(nullable: false),
+                    Is_Framework = table.Column<bool>(nullable: false),
+                    Assessment_Id1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AnalyticQuestionAnswer", x => x.AnalyticQuestionId);
                     table.ForeignKey(
-                        name: "FK_AnalyticQuestionAnswer_AnalyticDemographics_AnalyticDemogra~",
-                        column: x => x.AnalyticDemographicId,
-                        principalTable: "AnalyticDemographics",
-                        principalColumn: "AnalyticDemographicId",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_AnalyticQuestionAnswer_ANSWER_LOOKUP_ANSWER_LOOKUPAnswer_Te~",
+                        column: x => x.ANSWER_LOOKUPAnswer_Text,
+                        principalTable: "ANSWER_LOOKUP",
+                        principalColumn: "Answer_Text",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_AnalyticQuestionAnswer_Assessment_Assessment_Id",
+                        name: "FK_AnalyticQuestionAnswer_Assessments_Assessment_Id",
                         column: x => x.Assessment_Id,
                         principalSchema: "public",
-                        principalTable: "Assessment",
+                        principalTable: "Assessments",
                         principalColumn: "Assessment_Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AnalyticQuestionAnswer_Assessments_Assessment_Id1",
+                        column: x => x.Assessment_Id1,
+                        principalSchema: "public",
+                        principalTable: "Assessments",
+                        principalColumn: "Assessment_Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -307,10 +381,10 @@ namespace CsetAnalytics.DomainModels.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnalyticQuestionAnswer_AnalyticDemographicId",
+                name: "IX_AnalyticQuestionAnswer_ANSWER_LOOKUPAnswer_Text",
                 schema: "public",
                 table: "AnalyticQuestionAnswer",
-                column: "AnalyticDemographicId");
+                column: "ANSWER_LOOKUPAnswer_Text");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnalyticQuestionAnswer_Assessment_Id",
@@ -319,10 +393,28 @@ namespace CsetAnalytics.DomainModels.Migrations
                 column: "Assessment_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Assessment_ApplicationUser_Id",
+                name: "IX_AnalyticQuestionAnswer_Assessment_Id1",
                 schema: "public",
-                table: "Assessment",
-                column: "ApplicationUser_Id");
+                table: "AnalyticQuestionAnswer",
+                column: "Assessment_Id1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assessments_AnalyticDemographicId",
+                schema: "public",
+                table: "Assessments",
+                column: "AnalyticDemographicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assessments_AssessmentCreatorId",
+                schema: "public",
+                table: "Assessments",
+                column: "AssessmentCreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assessments_SectorId_IndustryId",
+                schema: "public",
+                table: "Assessments",
+                columns: new[] { "SectorId", "IndustryId" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PasswordHistory_CreatedUserId",
@@ -364,14 +456,23 @@ namespace CsetAnalytics.DomainModels.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Assessment",
+                name: "ANSWER_LOOKUP");
+
+            migrationBuilder.DropTable(
+                name: "Assessments",
                 schema: "public");
+
+            migrationBuilder.DropTable(
+                name: "AnalyticDemographics");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AnalyticDemographics");
+                name: "Sector_Industry");
+
+            migrationBuilder.DropTable(
+                name: "SECTOR");
         }
     }
 }
