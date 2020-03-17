@@ -11,6 +11,6 @@ namespace CsetAnalytics.Interfaces.Dashboard
     {
         Task<List<Series>> GetSectionAnalytics(string section);
         Task<List<Series>> GetIndustryAnalytics(string industry);
-        Task<List<Series>> GetMyAnalytics(int assessmentId);
+        Task<List<Series>> GetMyAnalytics(string userId);
     }
 }

@@ -27,7 +27,7 @@ namespace CsetAnalytics.Business.Dashboard
             return null;
         }
 
-        public async Task<List<Series>> GetMyAnalytics(int assessmentId)
+        public async Task<List<Series>> GetMyAnalytics(string userId)
         {
             return null;
         }
