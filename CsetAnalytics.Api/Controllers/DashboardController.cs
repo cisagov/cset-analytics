@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CsetAnalytics.DomainModels;
+using CsetAnalytics.Interfaces.Dashboard;
 using CsetAnalytics.ViewModels.Dashboard;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,13 +19,15 @@ namespace CsetAnalytics.Api.Controllers
     {
         
         private readonly IConfiguration config;
+        private readonly IDashboardBusiness _dashboardBusiness;
         private readonly CsetContext context;
         
         
 
-        public DashboardController(IConfiguration config, CsetContext context)
+        public DashboardController(IConfiguration config, IDashboardBusiness dashboardBusiness, CsetContext context)
         {   
             this.config = config;
+            this._dashboardBusiness = dashboardBusiness;
             this.context = context;
         }
 
@@ -32,7 +35,7 @@ namespace CsetAnalytics.Api.Controllers
         [Authorize]
         [HttpGet]
         [Route("GetDashboardChart")]
-        public async Task<DashboardChartData> GetDashBoardChart()
+        public async Task<IActionResult> GetDashBoardChart()
         {
             //TODO Flush out the controller to get the dependency injected viewmodel
             //create it from the factory and interface and 
@@ -40,8 +43,22 @@ namespace CsetAnalytics.Api.Controllers
 
             try
             {
+                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var sectionAnalytics = await _dashboardBusiness.GetSectionAnalytics(string.Empty);
+                var industryAnalytics = await _dashboardBusiness.GetIndustryAnalytics(string.Empty);
+                var myAnalytics = await _dashboardBusiness.GetMyAnalytics(userId);
+                List<Series> series = new List<Series>(); 
+                series.Union(sectionAnalytics).Union(industryAnalytics).Union(myAnalytics);
+
+                DashboardChartData dashboardChartData = new DashboardChartData
+                {
+                    name = string.Empty,
+                    series = series
+                    
+                };
+
                 //this.context.AnalyticQuestions.Where(x => x.Assessment_Id == 0);
-                return await Task.Run(() =>{ return new DashboardChartData();});                
+                return Ok(dashboardChartData);
             }
             catch (Exception ex)
             {
