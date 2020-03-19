@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CsetAnalytics.DomainModels.Migrations
 {
-    public partial class NextStepAfterInitial : Migration
+    public partial class firstrealworking : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,8 +72,7 @@ namespace CsetAnalytics.DomainModels.Migrations
                 name: "Sector",
                 columns: table => new
                 {
-                    SectorId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    SectorId = table.Column<int>(nullable: false),
                     SectorName = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>
@@ -229,8 +228,7 @@ namespace CsetAnalytics.DomainModels.Migrations
                 name: "Sector_Industries",
                 columns: table => new
                 {
-                    SectorId = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    SectorId = table.Column<int>(nullable: false),
                     IndustryId = table.Column<int>(nullable: false),
                     IndustryName = table.Column<string>(maxLength: 150, nullable: false)
                 },
@@ -340,6 +338,168 @@ namespace CsetAnalytics.DomainModels.Migrations
                         principalTable: "Assessments",
                         principalColumn: "Assessment_Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Answer_Lookup",
+                columns: new[] { "Answer_Text", "Answer_Full_Name" },
+                values: new object[,]
+                {
+                    { "A", "Alternate" },
+                    { "N", "No" },
+                    { "NA", "Not Applicable" },
+                    { "U", "Unanswered" },
+                    { "Y", "Yes" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Sector",
+                columns: new[] { "SectorId", "SectorName" },
+                values: new object[,]
+                {
+                    { 14, "Nuclear Reactors, Materials, and Waste Sector" },
+                    { 13, "Information Technology Sector" },
+                    { 12, "Healthcare and Public Health Sector" },
+                    { 11, "Government Facilities Sector" },
+                    { 10, "Food and Agriculture Sector" },
+                    { 9, "Financial Services Sector" },
+                    { 8, "Energy Sector" },
+                    { 6, "Defense Industrial Base Sector" },
+                    { 15, "Transportation Systems Sector" },
+                    { 5, "Dams Sector" },
+                    { 4, "Critical Manufacturing Sector" },
+                    { 3, "Communications Sector" },
+                    { 2, "Commercial Facilities Sector" },
+                    { 1, "Chemical Sector (Not Oil and Gas)" },
+                    { 7, "Emergency Services Sector" },
+                    { 16, "Water and Wastewater Systems Sector" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Sector_Industries",
+                columns: new[] { "SectorId", "IndustryId", "IndustryName" },
+                values: new object[,]
+                {
+                    { 1, 1, "Other" },
+                    { 12, 61, "Other" },
+                    { 12, 60, "Hospitals" },
+                    { 11, 104, "Non-Public Facilities" },
+                    { 11, 103, "Public Facilities" },
+                    { 11, 59, "Tribal Governments" },
+                    { 11, 58, "Territorial Governments" },
+                    { 11, 57, "State Governments" },
+                    { 11, 56, "Other" },
+                    { 11, 55, "Local Governments" },
+                    { 10, 102, "Supporting Facilities" },
+                    { 10, 101, "Product Distribution" },
+                    { 10, 100, "Product Transportation" },
+                    { 12, 62, "Residential Care Facilities" },
+                    { 10, 99, "Product Storage" },
+                    { 10, 97, "Supply" },
+                    { 10, 54, "Other" },
+                    { 10, 53, "Food Services" },
+                    { 10, 52, "Food Manufacturing Plants" },
+                    { 10, 51, "Beverage Manufacturing Plants" },
+                    { 9, 96, "Risk Transfer Products" },
+                    { 9, 95, "Investment Products" },
+                    { 9, 94, "Credit and Liquidity Products" },
+                    { 9, 93, "Consumer Services" },
+                    { 9, 50, "US Credit Unions" },
+                    { 9, 49, "US Banks" },
+                    { 9, 48, "Other" },
+                    { 10, 98, "Processing, Packaging, and Production" },
+                    { 8, 92, "Oil and Natural Gas" },
+                    { 12, 105, "Direct Patient Care" },
+                    { 12, 107, "Health Plans and Payers" },
+                    { 16, 75, "Other" },
+                    { 15, 74, "Pipelines (carries natural gas, hazardous liquids, and various chemicals.)" },
+                    { 15, 73, "Other" },
+                    { 15, 72, "Municipalities with Traffic Control Systems" },
+                    { 15, 71, "Mass Transit and Passenger Rail" },
+                    { 15, 70, "Maritime" },
+                    { 15, 69, "Highway (truck transportation)" },
+                    { 15, 68, "Freight Rail" },
+                    { 15, 67, "Aviation" },
+                    { 14, 120, "Radioactive Materials" },
+                    { 14, 119, "Radioactive Waste" },
+                    { 14, 118, "Nuclear Materials Transport" },
+                    { 12, 106, "Health IT" },
+                    { 14, 117, "Fuel Cycle Facilities" },
+                    { 14, 65, "Operating Nuclear Power Plants" },
+                    { 13, 116, "Incident Management" },
+                    { 13, 115, "Internet Routing and Connection" },
+                    { 13, 114, "Internet Content and Service Providers" },
+                    { 13, 113, "Identity and Trust Support Management" },
+                    { 13, 112, "DNS Services" },
+                    { 13, 111, "IT Production" },
+                    { 13, 64, "Other" },
+                    { 13, 63, "Information Technology" },
+                    { 12, 110, "Support Services" },
+                    { 12, 109, "Medical Materials" },
+                    { 12, 108, "Fatality Management Services" },
+                    { 14, 66, "Other" },
+                    { 8, 47, "Petroleum Refineries" },
+                    { 8, 46, "Other" },
+                    { 8, 45, "Natural Gas      " },
+                    { 4, 18, "Transportation and Heavy Equipment Manufacturing" },
+                    { 4, 17, "Primary Metal Manufacturing" },
+                    { 4, 16, "Other" },
+                    { 4, 15, "Machinery Manufacturing" },
+                    { 4, 14, "Electrical Equipment, Appliance and Component Manufacturing" },
+                    { 3, 86, "Wireline" },
+                    { 3, 85, "Satellite" },
+                    { 3, 84, "Cable" },
+                    { 3, 83, "Broadcasting" },
+                    { 3, 13, "Wireless Communications Service Providers" },
+                    { 3, 12, "Telecommunications" },
+                    { 3, 11, "Other" },
+                    { 4, 87, "Manufacturing" },
+                    { 2, 10, "Sports Leagues" },
+                    { 2, 8, "Real Estate" },
+                    { 2, 7, "Public Assembly" },
+                    { 2, 6, "Outdoor Events" },
+                    { 2, 5, "Other" },
+                    { 2, 4, "Lodging" },
+                    { 2, 3, "Gaming" },
+                    { 2, 2, "Entertainment and Media" },
+                    { 1, 82, "Agricultural Products" },
+                    { 1, 81, "Consumer Products" },
+                    { 1, 80, "Pharmaceutical Products" },
+                    { 1, 79, "Specialty Products" },
+                    { 1, 78, "Basic Chemicals" },
+                    { 2, 9, "Retail" },
+                    { 4, 88, "Heavy Machinery Manufacturing" },
+                    { 5, 19, "Dams" },
+                    { 5, 20, "Other" },
+                    { 8, 44, "Electric Power Generation, Transmission and Distribution      " },
+                    { 7, 43, "Public Works" },
+                    { 7, 42, "Other" },
+                    { 7, 41, "Law Enforcement    " },
+                    { 7, 40, "Fire and Rescue Services" },
+                    { 7, 39, "Emergency Medical Services" },
+                    { 7, 38, "Emergency Management" },
+                    { 6, 37, "Weapons" },
+                    { 6, 36, "Troop Support" },
+                    { 6, 35, "Structural Industry Commodities" },
+                    { 6, 34, "Space" },
+                    { 6, 33, "Shipbuilding Industry" },
+                    { 6, 32, "Research and Development Facilities" },
+                    { 6, 31, "Other" },
+                    { 6, 30, "Missile Industry" },
+                    { 6, 29, "Mechanical Industry Commodities" },
+                    { 6, 28, "Electronics" },
+                    { 6, 27, "Electrical Industry Commodities" },
+                    { 6, 26, "Defense Contractors    " },
+                    { 6, 25, "Communications" },
+                    { 6, 24, "Combat Vehicle" },
+                    { 6, 23, "Ammunition" },
+                    { 6, 22, "Aircraft Industry" },
+                    { 5, 91, "Tailings and Waste Impoundments" },
+                    { 5, 90, "Navigation Locks" },
+                    { 5, 89, "Levees" },
+                    { 5, 21, "Private Hydropower Facilities in the US" },
+                    { 16, 76, "Public Water Systems" },
+                    { 16, 77, "Publicly Owned Treatment Works" }
                 });
 
             migrationBuilder.CreateIndex(

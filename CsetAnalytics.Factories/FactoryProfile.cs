@@ -20,6 +20,7 @@ namespace CsetAnalytics.Factories
             CreateMap<AnalyticQuestionAnswer, AnalyticQuestionViewModel>();
             CreateMap<AnalyticDemographicViewModel, AnalyticDemographic>();
             CreateMap<AnalyticQuestionViewModel, AnalyticQuestionAnswer>();
+            CreateMap<AnalyticAssessmentViewModel, Assessment>();
                            
         }
     }

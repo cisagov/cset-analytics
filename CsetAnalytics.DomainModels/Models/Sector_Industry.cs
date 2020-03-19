@@ -18,7 +18,7 @@ namespace CsetAnalytics.DomainModels.Models
             Sector_Industry = new HashSet<Sector_Industry>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SectorId { get; set; }
 
         [Required]
@@ -37,7 +37,7 @@ namespace CsetAnalytics.DomainModels.Models
             AnalyticDemographics = new HashSet<AnalyticDemographic>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int SectorId { get; set; }
 
         

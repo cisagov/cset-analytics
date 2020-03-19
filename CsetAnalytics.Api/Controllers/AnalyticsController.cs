@@ -45,10 +45,12 @@ namespace CsetAnalytics.Api.Controllers
 
                 Assessment assessment = _assessmentViewModelFactory.Create(analytics.Assessment);
                 assessment.AnalyticDemographicId = rDemographic.AnalyticDemographicId;
+                assessment.AssessmentCreatorId = null;
                 assessment = await _analyticsBusiness.SaveAssessment(assessment);
 
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
-                //TODO UNCOMMENT questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
+                questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
+                questions.Where(x => x.Answer_Text == null).ToList().ForEach(x => x.Answer_Text = "U");
                 
 
 

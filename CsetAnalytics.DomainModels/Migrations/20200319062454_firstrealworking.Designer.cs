@@ -3,15 +3,17 @@ using System;
 using CsetAnalytics.DomainModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace CsetAnalytics.DomainModels.Migrations
 {
     [DbContext(typeof(CsetContext))]
-    partial class CsetContextModelSnapshot : ModelSnapshot
+    [Migration("20200319062454_firstrealworking")]
+    partial class firstrealworking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
