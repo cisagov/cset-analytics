@@ -35,35 +35,19 @@ namespace CsetAnalytics.Api.Controllers
         [Authorize]
         [HttpGet]
         [Route("GetDashboardChart")]
-        public async Task<IActionResult> GetDashBoardChart()
-        {
-            //TODO Flush out the controller to get the dependency injected viewmodel
-            //create it from the factory and interface and 
-            //IRON OUT the TASK vs ACTIONRESULT to return the object.
-
+        public async Task<IActionResult> GetDashBoardChart(int assessment_id)
+        {   
             try
             {
                 string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var sectionAnalytics = await _dashboardBusiness.GetSectorAnalytics(string.Empty);
-                var industryAnalytics = await _dashboardBusiness.GetIndustryAnalytics(string.Empty);
-                var myAnalytics = await _dashboardBusiness.GetMyAnalytics(userId);
-                List<Series> series = new List<Series>(); 
-                series.Union(sectionAnalytics).Union(industryAnalytics).Union(myAnalytics);
 
-                DashboardChartData dashboardChartData = new DashboardChartData
-                {
-                    name = string.Empty,
-                    series = series
-                    
-                };
-
-                //this.context.AnalyticQuestions.Where(x => x.Assessment_Id == 0);
+                DashboardChartData dashboardChartData  = await _dashboardBusiness.GetAverages(assessment_id);
+                
                 return Ok(dashboardChartData);
             }
             catch (Exception ex)
             {
-                //return ex.Message;
-                return null;
+                return BadRequest(ex.Message);                
             }
         }
     }

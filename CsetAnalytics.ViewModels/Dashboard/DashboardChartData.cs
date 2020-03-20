@@ -11,6 +11,6 @@ namespace CsetAnalytics.ViewModels.Dashboard
     public class Series
     {
         public string name { get; set; }
-        public int value { get; set; }
+        public double value { get; set; }
     }
 }
