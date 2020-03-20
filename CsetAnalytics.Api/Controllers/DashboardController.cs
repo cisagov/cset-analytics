@@ -42,7 +42,7 @@ namespace CsetAnalytics.Api.Controllers
             {
                 string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                DashboardChartData dashboardChartData  = await _dashboardBusiness.GetAverages(assessment_id);
+                List<Series> dashboardChartData  = await _dashboardBusiness.GetAverages(assessment_id);
                 
                 return Ok(dashboardChartData);
             }
@@ -55,15 +55,16 @@ namespace CsetAnalytics.Api.Controllers
         [Authorize]
         [HttpGet]
         [Route("GetAssessmentList")]
-        public async Task<IActionResult> GetAssessmentListChart()
+        public async Task<IActionResult> GetAssessmentList()
         {
             try
             {
                 string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                List<Assessment> dashboardChartData = await _dashboardBusiness.GetUserAssessments(userId);
+                //return Ok(context.Assessments.Where(x => x.AssessmentCreatorId == userId).ToList());
+                List<Assessment> assessmentData = await _dashboardBusiness.GetUserAssessments(userId);
 
-                return Ok(dashboardChartData);
+                return Ok(assessmentData);
             }
             catch (Exception ex)
             {

@@ -10,7 +10,7 @@ namespace CsetAnalytics.Interfaces.Dashboard
 {
     public interface IDashboardBusiness
     {
-        Task<DashboardChartData> GetAverages(int assessment_id);
+        Task<List<Series>> GetAverages(int assessment_id);
         Task<List<Assessment>> GetUserAssessments(string userId);
     }
 }

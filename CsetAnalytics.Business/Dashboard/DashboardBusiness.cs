@@ -24,7 +24,7 @@ namespace CsetAnalytics.Business.Dashboard
             _context = context;
         }
 
-        private List<Series> GetSectorAnalytics(int sector_id)
+        private Series GetSectorAnalytics(int sector_id)
         {
             //performance on this is going to such and I'm going to end up 
             //wrapping it in a stored procedure some day but until then
@@ -93,10 +93,10 @@ namespace CsetAnalytics.Business.Dashboard
             }
             average = average / sums.Values.Count();
 
-            return new List<Series>() { new Series() { name = SectorAverageName, value = average*100 } };
+            return new Series() { name = SectorAverageName, value = average*100 };
         }
 
-        private List<Series> GetIndustryAnalytics(int sector_id, int industry_id)
+        private Series GetIndustryAnalytics(int sector_id, int industry_id)
         {
             var query = from a in _context.Assessments
                         join d in _context.AnalyticDemographics on a.AnalyticDemographicId equals d.AnalyticDemographicId
@@ -153,10 +153,10 @@ namespace CsetAnalytics.Business.Dashboard
             }
             average = average / sums.Values.Count();
 
-            return new List<Series>() { new Series() { name = IndustryAverageName, value = average * 100 } };
+            return new Series() { name = IndustryAverageName, value = average * 100 } ;
         }
 
-        private List<Series> GetMyAnalytics(int myAssessment_Id)
+        private Series GetMyAnalytics(int myAssessment_Id)
         {
             var query = from a in _context.Assessments
                         join d in _context.AnalyticDemographics on a.AnalyticDemographicId equals d.AnalyticDemographicId
@@ -213,10 +213,10 @@ namespace CsetAnalytics.Business.Dashboard
             }
             average = average / sums.Values.Count();
 
-            return new List<Series>() { new Series() { name = MyAssesmentAverageName, value = average * 100 } };
+            return new Series() { name = MyAssesmentAverageName, value = average * 100 };
         }
 
-        public async Task<DashboardChartData> GetAverages(int assessment_id)
+        public async Task<List<Series>> GetAverages(int assessment_id)
         {
             var assessment =  _context.Assessments.Where(x => x.Assessment_Id == assessment_id).FirstOrDefault();
             
@@ -226,17 +226,15 @@ namespace CsetAnalytics.Business.Dashboard
                 var sectionAnalytics = GetSectorAnalytics(demographic.SectorId);
                 var industryAnalytics = GetIndustryAnalytics(demographic.SectorId,demographic.IndustryId);
                 var myAnalytics = GetMyAnalytics(assessment_id);
-                List<Series> series = new List<Series>();
-                series.Union(sectionAnalytics).Union(industryAnalytics).Union(myAnalytics);
-                return new DashboardChartData() { name = "Top Averages",series=series};
+                List<Series> listseries = new List<Series>();
+                listseries.Add(sectionAnalytics);
+                listseries.Add(industryAnalytics);
+                listseries.Add(myAnalytics);
+                return listseries;
             }
             else
             {
-                return new DashboardChartData
-                {
-                    name = string.Empty,
-                    series = new List<Series>() { new Series() { name = SectorAverageName, value = 0 }, new Series() { name = IndustryAverageName, value = 0 }, new Series() { name = MyAssesmentAverageName, value = 0 } }
-                };
+                return new List<Series>();
             }
 
             
@@ -244,7 +242,7 @@ namespace CsetAnalytics.Business.Dashboard
 
         public async Task<List<Assessment>> GetUserAssessments(string userId)
         {
-            return _context.Assessments.Where(x => x.AssessmentCreatorId == userId).ToList();
+            return _context.Assessments.ToList();//.Where(x => x.AssessmentCreatorId == userId).ToList();
         }
     }
 

@@ -4,12 +4,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CsetAnalytics.Business;
 using CsetAnalytics.Business.Analytics;
+using CsetAnalytics.Business.Dashboard;
 using CsetAnalytics.DomainModels;
 using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Factories;
 using CsetAnalytics.Factories.Analytics;
 using CsetAnalytics.Interfaces;
 using CsetAnalytics.Interfaces.Analytics;
+using CsetAnalytics.Interfaces.Dashboard;
 using CsetAnalytics.Interfaces.Factories;
 using CsetAnalytics.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -114,6 +116,7 @@ namespace CsetAnalytics.Api
             //Business
             services.AddTransient<IUserBusiness, UsersBusiness>();
             services.AddTransient<IAnalyticBusiness, AnalyticsBusiness>();
+            services.AddTransient<IDashboardBusiness, DashboardBusiness>();
 
             //Factories
             services.AddTransient<IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic>, AnalyticDemographicModelFactory>();

@@ -81,25 +81,29 @@ export class DashboardComponent implements OnInit {
     //Object.assign(this, this.multi);
   }
 
-  ngOnInit() {
-    
+  ngOnInit() {    
+    //this.getDashboardData(2);
     this.getAssessmentData();
   }
   getAssessmentData() {
     this.dashboardService.getAssessmentsForUser("Barry2").subscribe((data: any)=>{
       this.data= data;      
+      
     });
   }
   
   getDashboardData(Assessment_Id:number){
     this.dashboardService.getDashboard(Assessment_Id).subscribe((data:any)=>{
+        console.log("this is the data");
+        console.log(data);
         this.dashboardData = data;
       }      
     );
   }
 
   setRecord(item: any){
-    this.getDashboardData(item.Assessment_Id);
+    console.log(item);
+    this.getDashboardData(item.assessment_Id);
   }
 
   onSelect(event){
