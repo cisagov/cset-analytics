@@ -22,7 +22,7 @@ import { LayoutMainComponent } from './components/layout/layout-main/layout-main
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DashboardService } from './components/dashboard/dashboard.service';
-
+import { DataTableModule } from 'ng-angular8-datatable';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,8 @@ import { DashboardService } from './components/dashboard/dashboard.service';
     MaterialModule, 
     CovalentLayoutModule, 
     CovalentStepsModule, 
-    NgxChartsModule
+    NgxChartsModule,
+    DataTableModule
   ],
   providers: [
     LoginService,

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using CsetAnalytics.DomainModels.Models;
+using CsetAnalytics.ViewModels;
 
 namespace CsetAnalytics.Interfaces.Analytics
 {
     public interface IAnalyticBusiness
     {
         Task<AnalyticDemographic> SaveAnalyticDemographic(AnalyticDemographic demographic);
-        Task SaveAnalyticQuestions(List<AnalyticQuestion> questions);
+        Task SaveAnalyticQuestions(List<AnalyticQuestionAnswer> questions);
+        Task<Assessment> SaveAssessment(Assessment assessment);
     }
 }

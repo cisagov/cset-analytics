@@ -17,12 +17,11 @@ namespace CsetAnalytics.Factories
         private void RegisterMappings()
         {
             CreateMap<AnalyticDemographic, AnalyticDemographicViewModel>();
-            CreateMap<AnalyticQuestion, AnalyticQuestionViewModel>();
+            CreateMap<AnalyticQuestionAnswer, AnalyticQuestionViewModel>();
             CreateMap<AnalyticDemographicViewModel, AnalyticDemographic>();
-            CreateMap<AnalyticQuestionViewModel, AnalyticQuestion>()
-                .ForMember(x=>x.AnalyticDemographicId, opt=>opt.Ignore())
-                .ForMember(x=>x.AnalyticDemographic, opt=>opt.Ignore());
-           
+            CreateMap<AnalyticQuestionViewModel, AnalyticQuestionAnswer>();
+            CreateMap<AnalyticAssessmentViewModel, Assessment>();
+                           
         }
     }
 }
