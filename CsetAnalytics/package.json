@@ -25,6 +25,7 @@
     "@swimlane/ngx-charts": "^13.0.2",
     "bootstrap": "^4.4.1",
     "moment": "^2.24.0",
+    "ng-angular8-datatable": "^0.9.11",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

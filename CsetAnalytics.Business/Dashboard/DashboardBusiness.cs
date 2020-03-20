@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CsetAnalytics.DomainModels;
+using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Interfaces.Dashboard;
 using CsetAnalytics.ViewModels.Dashboard;
 
@@ -239,6 +240,11 @@ namespace CsetAnalytics.Business.Dashboard
             }
 
             
+        }
+
+        public async Task<List<Assessment>> GetUserAssessments(string userId)
+        {
+            return _context.Assessments.Where(x => x.AssessmentCreatorId == userId).ToList();
         }
     }
 

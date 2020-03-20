@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CsetAnalytics.DomainModels;
+using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Interfaces.Dashboard;
 using CsetAnalytics.ViewModels.Dashboard;
 using Microsoft.AspNetCore.Authorization;
@@ -48,6 +49,25 @@ namespace CsetAnalytics.Api.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);                
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("GetAssessmentList")]
+        public async Task<IActionResult> GetAssessmentListChart()
+        {
+            try
+            {
+                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                List<Assessment> dashboardChartData = await _dashboardBusiness.GetUserAssessments(userId);
+
+                return Ok(dashboardChartData);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }
