@@ -25,10 +25,18 @@ namespace CsetAnalytics.Business.Analytics
             return demographic;
         }
 
-        public async Task SaveAnalyticQuestions(List<AnalyticQuestion> questions)
+        public async Task SaveAnalyticQuestions(List<AnalyticQuestionAnswer> questions)
         {
-            await _context.AnalyticQuestions.AddRangeAsync(questions);
+            await _context.AnalyticQuestionAnswers.AddRangeAsync(questions);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Assessment> SaveAssessment(Assessment assessment)
+        {
+            _context.Assessments.Add(assessment);
+            await _context.SaveChangesAsync();
+            return assessment;
+        }
+
     }
 }
