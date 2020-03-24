@@ -75,7 +75,6 @@ namespace CsetAnalytics.Api.Controllers
             return Ok(userRole);
         }
 
-        //[Authorize(Roles = "Admin")]
         [Route("createUser")]
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] NewUser user)

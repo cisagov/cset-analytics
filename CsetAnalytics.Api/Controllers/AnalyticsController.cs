@@ -29,6 +29,7 @@ namespace CsetAnalytics.Api.Controllers
             _analyticsBusiness = analyticsBusiness;
         }
 
+        [Authorize]
         [HttpPost]
         [Route("postAnalyticsAnonymously")]
         public async Task<IActionResult> PostAnalyticsAnonymously([FromBody]AnalyticsViewModel analytics)
