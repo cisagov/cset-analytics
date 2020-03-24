@@ -13,7 +13,7 @@ namespace CsetAnalytics.Interfaces
         Task<IEnumerable<User>> GetAllUsers();
         Task<string> GetUserRole(string id);
         Task<IEnumerable<string>> GetAllRoles();
-        Task<string> CreateUser(NewUser user);
+        Task<UserErrors> CreateUser(NewUser user);
         Task<string> UpdateRole(EditUser editUser);
         Task<bool> PasswordExpired(string userId);
         Task<bool> PasswordCanBeUsed(string userId, string newPassword);

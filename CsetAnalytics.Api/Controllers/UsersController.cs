@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CsetAnalytics.DomainModels;
 using CsetAnalytics.DomainModels.Models;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 
 namespace CsetAnalytics.Api.Controllers
@@ -81,15 +83,16 @@ namespace CsetAnalytics.Api.Controllers
         {
             try
             {
-                string message = await _userBusiness.CreateUser(user);
-                if (message == string.Empty)
-                    return Ok("User Created");
+                var message = await _userBusiness.CreateUser(user);
+                if (message.Errors == null)
+                    return Ok(new List<string>{"User Created"});
                 return BadRequest(message);
             }
             catch (Exception ex)
             {
                 var error = ex.Message;
-                return BadRequest("User could not be created");
+                return BadRequest(new userErr
+                    {"User could not be created"});
             }
         }
 

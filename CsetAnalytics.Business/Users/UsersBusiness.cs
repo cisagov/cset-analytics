@@ -130,7 +130,7 @@ namespace CsetAnalytics.Business
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<string> CreateUser(NewUser user)
+        public async Task<UserErrors> CreateUser(NewUser user)
         {
             try
             {
@@ -141,21 +141,24 @@ namespace CsetAnalytics.Business
                     appUser.UserName = user.UserName;
                     appUser.Email = user.Email.ToLower();
                     appUser.ChangePassword = true;
-
-                    IdentityResult result = _userManager.CreateAsync(appUser, user.NewPassword).Result;
+                    IdentityResult result = await _userManager.CreateAsync(appUser, user.NewPassword);
                     if (result.Succeeded)
                     {
                         user.Role = RolesEnum.User.ToString();
                         var roleSuccess = await _userManager.AddToRoleAsync(appUser, user.Role);
                     }
-                    return "";
+
+                    var message = new UserErrors
+                        {Errors = result.Errors.Any() ? result.Errors.Select(x => x.Description).ToList() : null};
+
+                    return message;
                 }
-                return ("Username already exists");
+                return (new UserErrors { Errors = new List<string>{"User already exists."}});
             }
             catch (Exception ex)
             {
                 var error = ex.Message;
-                return ("Username could not be created");
+                return (new UserErrors { Errors = new List<string> { "Username could not be created" } });
             }
 
         }
