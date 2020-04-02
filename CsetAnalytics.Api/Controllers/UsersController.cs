@@ -91,8 +91,7 @@ namespace CsetAnalytics.Api.Controllers
             catch (Exception ex)
             {
                 var error = ex.Message;
-                return BadRequest(new userErr
-                    {"User could not be created"});
+                return BadRequest(new UserErrors() { Errors = new List<string>() { "User could not be created" }});
             }
         }
 
