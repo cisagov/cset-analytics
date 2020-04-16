@@ -31,9 +31,9 @@
             </p>
       
             <div class="button">
-              <button type="submit" [disabled]="password.hasError('required')" mat-button (click)="submit()">Login</button>
+              <button type="submit" [disabled]="password.hasError('required')" mat-raised-button color="primary" (click)="submit()">Login</button>
+              <button [routerLink]="['/login/registeruser']" mat-button color="primary"> Register User</button>
             </div>
-      
           </form>
     </mat-card-content>
 </mat-card>
