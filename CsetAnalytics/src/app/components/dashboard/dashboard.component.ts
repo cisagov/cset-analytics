@@ -9,56 +9,6 @@ import { assertNotNull } from '@angular/compiler/src/output/output_ast';
 })
 export class DashboardComponent implements OnInit {
 
-  // multi: any[] =[ 
-  //   {
-  //     "name": "Industry", 
-  //     "series": [{
-  //       "name": "Yes",
-  //       "value": 197
-  //       },
-  //       {
-  //         "name": "No",
-  //         "value": 100
-  //       },
-  //       {
-  //         "name": "Unanswered",
-  //         "value": 58
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     "name": "Sector", 
-  //     "series": [{
-  //       "name": "Yes",
-  //       "value": 235
-  //       },
-  //       {
-  //         "name": "No",
-  //         "value": 87
-  //       },
-  //       {
-  //         "name": "Unanswered",
-  //         "value": 28
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     "name": "My Data", 
-  //     "series": [{
-  //       "name": "Yes",
-  //       "value": 168
-  //       },
-  //       {
-  //         "name": "No",
-  //         "value": 72
-  //       },
-  //       {
-  //         "name": "Unanswered",
-  //         "value": 110
-  //       }
-  //     ]
-  //   }
-  // ];
   view: any[] = [700, 400]
 
   showXAxis: boolean = true;
@@ -85,6 +35,7 @@ export class DashboardComponent implements OnInit {
     //this.getDashboardData(2);
     this.getAssessmentData();
   }
+  
   getAssessmentData() {
     this.dashboardService.getAssessmentsForUser("Barry2").subscribe((data: any)=>{
       this.data= data;      
