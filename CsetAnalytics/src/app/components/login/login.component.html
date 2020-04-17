@@ -1,9 +1,13 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>Login</mat-card-title>
+        <mat-card-title>Login</mat-card-title>       
     </mat-card-header>
-    <mat-card-content>
+    <mat-card-content>        
         <form>
+          <div style="width: 350px; ">
+            <p>When submitting anonymous data it is recorded with no user identifying information.</p>
+            <p>If you would like to see your submission, submit with login and return here to login to compare your submission against your CSET Assessment sector and industry averages.   When submitting with login your data will be associated with an anonymous user identifier accessible only to you.</p>      
+          </div>                
             <p>
               <mat-form-field appearance="outline">
                 <input type="text" matInput placeholder="Username" [formControl]="username"
@@ -34,7 +38,7 @@
               <button type="submit" [disabled]="password.hasError('required')" mat-button (click)="submit()">Login</button>
             </div>
       
-          </form>
+          </form>        
     </mat-card-content>
 </mat-card>
     

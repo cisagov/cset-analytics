@@ -33,7 +33,7 @@ namespace CsetAnalytics.Api.Controllers
             _analyticsBusiness = analyticsBusiness;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("postAnalyticsAnonymously")]
         public async Task<IActionResult> PostAnalyticsAnonymously([FromBody]AnalyticsViewModel analytics)
@@ -64,7 +64,7 @@ namespace CsetAnalytics.Api.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         [Route("postAnalytics")]
         public async Task<IActionResult> PostAnalytics([FromBody]AnalyticsViewModel analytics){
@@ -80,7 +80,7 @@ namespace CsetAnalytics.Api.Controllers
                 assessment = await _analyticsBusiness.SaveAssessment(assessment);
 
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
-                //TODO UNCOMMENT questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
+                questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
                 await _analyticsBusiness.SaveAnalyticQuestions(questions);                
                 return Ok(new { message = "Analytics data saved" });
             }
