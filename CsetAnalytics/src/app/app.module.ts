@@ -10,6 +10,7 @@ import { AuthGuard } from './auth/authGuard';
 import { CovalentLayoutModule } from '@covalent/core/layout';
 import { CovalentStepsModule  } from '@covalent/core/steps';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { LoginService } from './components/login/login.service';
 
@@ -23,6 +24,8 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DashboardService } from './components/dashboard/dashboard.service';
 import { DataTableModule } from 'ng-angular8-datatable';
+import { RegisterUserComponent } from './components/user-management/register-user/register-user.component';
+import { UserManagementService } from './components/user-management/user-management.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { DataTableModule } from 'ng-angular8-datatable';
     DashboardComponent,
     LayoutBlankComponent,
     LayoutMainComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,
@@ -44,11 +48,13 @@ import { DataTableModule } from 'ng-angular8-datatable';
     CovalentLayoutModule, 
     CovalentStepsModule, 
     NgxChartsModule,
-    DataTableModule
+    DataTableModule,
+    FontAwesomeModule
   ],
   providers: [
     LoginService,
     DashboardService, 
+    UserManagementService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS, 

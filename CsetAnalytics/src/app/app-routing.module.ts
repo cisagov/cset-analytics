@@ -5,13 +5,15 @@ import { LayoutMainComponent } from './components/layout/layout-main/layout-main
 import { AuthGuard } from './auth/authGuard';
 import { LoginComponent } from './components/login/login.component'
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { RegisterUserComponent } from './components/user-management/register-user/register-user.component';
 
 
 const routes: Routes = [
   {
     path:'login', component: LayoutBlankComponent,
     children: [
-      { path: '', component: LoginComponent}
+      { path: '', component: LoginComponent}, 
+      { path: 'registeruser', component: RegisterUserComponent}
     ]
   },
   {

@@ -35,10 +35,10 @@
             </p>
       
             <div class="button">
-              <button type="submit" [disabled]="password.hasError('required')" mat-button (click)="submit()">Login</button>
+              <button type="submit" [disabled]="password.hasError('required')" mat-raised-button color="accent" (click)="submit()">Login</button>
+              <button [routerLink]="['/login/registeruser']" mat-button color="accent"> Register User</button>
             </div>
-      
-          </form>        
+          </form>
     </mat-card-content>
 </mat-card>
     
