@@ -248,10 +248,16 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
     margin-right:5px !important;
 }
 
-.mat-card-header{
+.mat-card-header-primary{
     background-color: #052637 !important;
     color:#fff !important;
     padding:16px 16px 6px 16px !important;
+}
+
+.mat-card-header-accent{
+  background-color: #367190 !important;
+  color:#fff !important;
+  padding:16px 16px 6px 16px !important;
 }
 
 .mat-card-content{
