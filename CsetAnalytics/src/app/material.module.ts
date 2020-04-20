@@ -19,6 +19,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table'
 import { MatToolbarModule, MatProgressBarModule, MatAutocompleteModule, MatSlideToggleModule, MatSidenavModule, MatListModule } from '@angular/material';
 
 
@@ -46,7 +47,8 @@ import { MatToolbarModule, MatProgressBarModule, MatAutocompleteModule, MatSlide
     MatTabsModule,
     MatToolbarModule,
     MatMenuModule,
-    MatSidenavModule
+    MatSidenavModule, 
+    MatTableModule
   ],
   exports: [
     MatButtonModule,
@@ -73,7 +75,8 @@ import { MatToolbarModule, MatProgressBarModule, MatAutocompleteModule, MatSlide
     MatToolbarModule,
     MatMenuModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule, 
+    MatTableModule
   ]
 })
 export class MaterialModule { }

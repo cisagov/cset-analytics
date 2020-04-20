@@ -260,6 +260,18 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   padding:16px 16px 6px 16px !important;
 }
 
+.mat-header-row{
+  background-color: #052637 !important;
+}
+
+.mat-header-cell{
+  color:#fff !important;
+}
+
+.mat-table{
+  width:100% !important;
+}
+
 .mat-card-content{
     padding:16px !important;
 }

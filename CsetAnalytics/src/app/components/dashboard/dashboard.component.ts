@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
 
   dashboardData: any;
   data: any;
+  displayedColumns: string[] = ['assessment_Id', 'alias', 'assessmentCreatedDate', 'lastAccessedDate'];
   Assessment_Id: number;
   constructor(private dashboardService: DashboardService) { 
     //Object.assign(this, this.multi);

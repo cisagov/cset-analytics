@@ -6,31 +6,35 @@
                     <mat-card-title>Analytic Assessments</mat-card-title>
                 </mat-card-header>
                 <mat-card-content>
-                    <table class="table table-striped table-bordered" [svData]="data" #sv="svDataTable" [svRowsOnPage]="5" svSortBy="name" svSortOrder="asc" style="margin-left: 10px;">
-                        <thead>
-                        <tr>                    
-                            <th><sv-default-sorter by="name">Assessment ID</sv-default-sorter></th>
-                            <th>Alias</th> 
-                            <th>Assessment Created Date</th> 
-                            <th>Last Accessed Date</th> 
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let item of sv.data" (click)="setRecord(item)">
-                            <td class="text-md-right">{{ item.assessment_Id }}</td>
-                            <td>{{ item.alias }}</td>                    
-                            <td>{{ item.assessmentCreatedDate | date }}</td>                                        
-                            <td>{{ item.lastAccessedDate | date }}</td>                    
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="4">
-                                <sv-bootstrap-paginator [rowsOnPageSet]="[5, 10, 25]"></sv-bootstrap-paginator>
-                            </td>
-                        </tr>
-                        </tfoot>
+                    <div>
+                    <table mat-table [dataSource]="data" class="mat-elevation-z2">
+                        <ng-container matColumnDef="assessment_Id">
+                            <th mat-header-cell *matHeaderCellDef> Assessment Id </th>
+                            <td mat-cell *matCellDef="let element"> {{element.assessment_Id}} </td>
+                          </ng-container>
+                        
+                          <!-- Name Column -->
+                          <ng-container matColumnDef="alias">
+                            <th mat-header-cell *matHeaderCellDef> Alias </th>
+                            <td mat-cell *matCellDef="let element"> {{element.alias}} </td>
+                          </ng-container>
+                        
+                          <!-- Weight Column -->
+                          <ng-container matColumnDef="assessmentCreatedDate">
+                            <th mat-header-cell *matHeaderCellDef> Create Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.assessmentCreatedDate | date}} </td>
+                          </ng-container>
+                        
+                          <!-- Symbol Column -->
+                          <ng-container matColumnDef="lastAccessedDate">
+                            <th mat-header-cell *matHeaderCellDef> Last Accessed </th>
+                            <td mat-cell *matCellDef="let element"> {{element.lastAccessedDate | date}} </td>
+                          </ng-container>
+                        
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
+                </div>
                 </mat-card-content>
             </mat-card>
             <mat-card class="mat-card-margin-10">
