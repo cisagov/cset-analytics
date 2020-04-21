@@ -14,7 +14,7 @@ namespace CsetAnalytics.Api.Controllers
         [HttpGet]
         public IActionResult GetPing()
         {
-            return Ok("Received");
+            return Ok();
         }
     }
 }
