@@ -38,10 +38,13 @@ export class DashboardComponent implements OnInit {
   }
   
   getAssessmentData() {
-    this.dashboardService.getAssessmentsForUser("Barry2").subscribe((data: any)=>{
-      this.data= data;      
-      
-    });
+    if(sessionStorage.getItem("username")){
+      this.dashboardService.getAssessmentsForUser(sessionStorage.getItem("username")).subscribe((data: any)=>{
+        this.data= data;      
+      });
+    }
+    
+    
   }
   
   getDashboardData(Assessment_Id:number){

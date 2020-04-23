@@ -81,12 +81,13 @@ namespace CsetAnalytics.Api.Controllers
 
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
                 questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
+                questions.ForEach(x => x.Answer_Text = string.IsNullOrEmpty(x.Answer_Text) ? "U" : x.Answer_Text);
                 await _analyticsBusiness.SaveAnalyticQuestions(questions);                
                 return Ok(new { message = "Analytics data saved" });
             }
             catch (Exception ex)
             {
-                return BadRequest($"Analytics information was not saved: {ex.Message}");
+                return BadRequest(new { message = $"Analytics information was not saved"});
             }
         }
     }
