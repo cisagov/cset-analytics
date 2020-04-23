@@ -20,7 +20,7 @@ namespace CsetAnalytics.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseSetting("https_port", "5000");
+                    webBuilder.UseSetting("https_port", "8081");
                     webBuilder.UseStartup<Startup>();
                 });
     }
