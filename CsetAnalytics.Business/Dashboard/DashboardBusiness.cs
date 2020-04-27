@@ -91,7 +91,7 @@ namespace CsetAnalytics.Business.Dashboard
             {
                 average += s.Percentage;
             }
-            average = average / sums.Values.Count();
+            average = average / (sums.Values.Count()==0?1:sums.Values.Count());
 
             return new Series() { name = SectorAverageName, value = average*100 };
         }
@@ -151,7 +151,7 @@ namespace CsetAnalytics.Business.Dashboard
             {
                 average += s.Percentage;
             }
-            average = average / sums.Values.Count();
+            average = average / (sums.Values.Count()==0?1:sums.Values.Count());
 
             return new Series() { name = IndustryAverageName, value = average * 100 } ;
         }
@@ -211,7 +211,7 @@ namespace CsetAnalytics.Business.Dashboard
             {
                 average += s.Percentage;
             }
-            average = average / sums.Values.Count();
+            average = average / (sums.Values.Count() == 0 ? 1 : sums.Values.Count());
 
             return new Series() { name = MyAssesmentAverageName, value = average * 100 };
         }

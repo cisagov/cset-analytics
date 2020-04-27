@@ -19,7 +19,10 @@ namespace CsetAnalytics.Factories
             CreateMap<AnalyticDemographic, AnalyticDemographicViewModel>();
             CreateMap<AnalyticQuestionAnswer, AnalyticQuestionViewModel>();
             CreateMap<AnalyticDemographicViewModel, AnalyticDemographic>();
-            CreateMap<AnalyticQuestionViewModel, AnalyticQuestionAnswer>();
+            CreateMap<AnalyticQuestionViewModel, AnalyticQuestionAnswer>()
+                .ForMember(dest => dest.Question_Or_Requirement_Id, 
+                    opt=>opt.MapFrom( 
+                        src => src.QuestionId));
             CreateMap<AnalyticAssessmentViewModel, Assessment>();
                            
         }
