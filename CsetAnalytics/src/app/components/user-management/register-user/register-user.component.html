@@ -20,7 +20,7 @@
                 <p>
                   <mat-form-field appearance="outline" [formGroup]="userFormGroup">
                       <input type="text" matInput placeholder="Email" formControlName="email"
-                      [errorStateMatcher]="matchEmail">
+                      [errorStateMatcher]="matchemail">
                       <mat-icon matPrefix style="margin-right:10px;">mail</mat-icon>
                       <mat-error *ngIf="userFormGroup.controls.email.hasError('required')">
                           Email <strong>required</strong>

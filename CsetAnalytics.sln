@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsetAnalytics.Enums", "Cset
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7B190A64-0A92-449A-8C01-BC856AA065E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldCore", "HelloWorldCore\HelloWorldCore.csproj", "{7B74C13E-4FBD-46B1-915D-4C94E5FCE028}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{CE12C5AE-1B3B-47EA-8FA6-685E2EE9BEC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE12C5AE-1B3B-47EA-8FA6-685E2EE9BEC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE12C5AE-1B3B-47EA-8FA6-685E2EE9BEC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B74C13E-4FBD-46B1-915D-4C94E5FCE028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B74C13E-4FBD-46B1-915D-4C94E5FCE028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B74C13E-4FBD-46B1-915D-4C94E5FCE028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B74C13E-4FBD-46B1-915D-4C94E5FCE028}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

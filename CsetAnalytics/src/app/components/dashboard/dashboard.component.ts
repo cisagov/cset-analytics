@@ -32,8 +32,7 @@ export class DashboardComponent implements OnInit {
     //Object.assign(this, this.multi);
   }
 
-  ngOnInit() {    
-    //this.getDashboardData(2);
+  ngOnInit() {        
     this.getAssessmentData();
   }
   
@@ -45,9 +44,7 @@ export class DashboardComponent implements OnInit {
   }
   
   getDashboardData(Assessment_Id:number){
-    this.dashboardService.getDashboard(Assessment_Id).subscribe((data:any)=>{
-        console.log("this is the data");
-        console.log(data);
+    this.dashboardService.getDashboard(Assessment_Id).subscribe((data:any)=>{        
         this.dashboardData = data;
       }      
     );
