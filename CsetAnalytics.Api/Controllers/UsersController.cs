@@ -85,13 +85,13 @@ namespace CsetAnalytics.Api.Controllers
             {
                 var message = await _userBusiness.CreateUser(user);
                 if (message.Errors == null)
-                    return Ok(new List<string>{"User Created"});
+                    return Ok(new List<string> { "User Created" });
                 return BadRequest(message);
             }
             catch (Exception ex)
             {
                 var error = ex.Message;
-                return BadRequest(new UserErrors() { Errors = new List<string>() { "User could not be created" }});
+                return BadRequest(new UserErrors() { Errors = new List<string>() { "User could not be created" } });
             }
         }
 

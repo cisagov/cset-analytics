@@ -13,14 +13,22 @@ namespace CsetAnalytics.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                CurrentDirectoryHelpers.SetCurrentDirectory();
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch(Exception e)
+            {
+                Console.Write(e);
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseSetting("https_port", "8081");
+                    webBuilder.UseSetting("https_port", "8885");
                     webBuilder.UseStartup<Startup>();
                 });
     }

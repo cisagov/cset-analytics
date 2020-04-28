@@ -40,7 +40,7 @@ namespace CsetAnalytics.Api.Controllers
         {
             try
             {
-                
+
                 AnalyticDemographic demographic = _demographicViewModelFactory.Create(analytics.Demographics);
                 AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
 
@@ -52,7 +52,7 @@ namespace CsetAnalytics.Api.Controllers
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
                 questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
                 questions.Where(x => x.Answer_Text == null).ToList().ForEach(x => x.Answer_Text = "U");
-                
+
 
 
                 await _analyticsBusiness.SaveAnalyticQuestions(questions);
@@ -67,7 +67,8 @@ namespace CsetAnalytics.Api.Controllers
         //[Authorize]
         [HttpPost]
         [Route("postAnalytics")]
-        public async Task<IActionResult> PostAnalytics([FromBody]AnalyticsViewModel analytics){
+        public async Task<IActionResult> PostAnalytics([FromBody]AnalyticsViewModel analytics)
+        {
             try
             {
                 string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -82,12 +83,12 @@ namespace CsetAnalytics.Api.Controllers
                 List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
                 questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
                 questions.ForEach(x => x.Answer_Text = string.IsNullOrEmpty(x.Answer_Text) ? "U" : x.Answer_Text);
-                await _analyticsBusiness.SaveAnalyticQuestions(questions);                
+                await _analyticsBusiness.SaveAnalyticQuestions(questions);
                 return Ok(new { message = "Analytics data saved" });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return BadRequest(new { message = $"Analytics information was not saved"});
+                return BadRequest(new { message = $"Analytics information was not saved" });
             }
         }
     }

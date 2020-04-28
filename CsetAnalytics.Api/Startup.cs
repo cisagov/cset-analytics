@@ -53,17 +53,17 @@ namespace CsetAnalytics.Api
             services.AddControllers();
             services.AddSingleton(_config);
 
-            //var mappingConfig = new MapperConfiguration(mc =>
-            //{
-            //    mc.AddProfile(new FactoryProfile());
-            //});
-            //IMapper mapper = mappingConfig.CreateMapper();
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new FactoryProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
 
             services.AddAutoMapper(typeof(FactoryProfile));
 
             //services.AddSingleton(mapper);
 
-            
+
 
             services.AddCors(options =>
             {
@@ -78,7 +78,7 @@ namespace CsetAnalytics.Api
                     });
             });
             services.AddDbContext<CsetContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("CsetConnection"), b=>b.MigrationsAssembly("CsetAnalytics.DomainModels")));
+                options.UseNpgsql(Configuration.GetConnectionString("CsetConnection"), b => b.MigrationsAssembly("CsetAnalytics.DomainModels")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<CsetContext>()
                 .AddDefaultTokenProviders();
@@ -105,11 +105,11 @@ namespace CsetAnalytics.Api
             {
                 o.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuerSigningKey = true, 
+                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false, 
+                    ValidateIssuer = false,
                     ValidateAudience = false
-                    
+
                 };
             });
 
@@ -128,7 +128,7 @@ namespace CsetAnalytics.Api
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //This method gets called by the runtime.Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())

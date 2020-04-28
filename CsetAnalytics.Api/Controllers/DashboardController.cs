@@ -18,15 +18,15 @@ namespace CsetAnalytics.Api.Controllers
     [ApiController]
     public class DashboardController : ControllerBase
     {
-        
+
         private readonly IConfiguration config;
         private readonly IDashboardBusiness _dashboardBusiness;
         private readonly CsetContext context;
-        
-        
+
+
 
         public DashboardController(IConfiguration config, IDashboardBusiness dashboardBusiness, CsetContext context)
-        {   
+        {
             this.config = config;
             this._dashboardBusiness = dashboardBusiness;
             this.context = context;
@@ -37,18 +37,18 @@ namespace CsetAnalytics.Api.Controllers
         [HttpGet]
         [Route("GetDashboardChart")]
         public async Task<IActionResult> GetDashBoardChart(int assessment_id)
-        {   
+        {
             try
             {
                 string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                List<Series> dashboardChartData  = await _dashboardBusiness.GetAverages(assessment_id);
-                
+                List<Series> dashboardChartData = await _dashboardBusiness.GetAverages(assessment_id);
+
                 return Ok(dashboardChartData);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);                
+                return BadRequest(ex.Message);
             }
         }
 
