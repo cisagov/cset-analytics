@@ -5,17 +5,18 @@ import * as moment from 'moment';
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { share } from "rxjs/operators";
+import { ConfigService } from '../../services/config.service';
 
 @Injectable()
 
 export class LoginService {
-
-  constructor(private http: HttpClient, private router: Router) {
-
+  apiUrl: string;
+  constructor(private http: HttpClient, private router: Router, public configSvc: ConfigService) {
+    this.apiUrl = configSvc.apiUrl;
   }
 
   public postLogin(login: Login): Observable<any> {
-    return this.http.post('https://localhost:8881/api/login/authenticate',login).pipe(share());
+    return this.http.post(this.apiUrl + 'login/authenticate',login).pipe(share());
   }
 
   public logout() {

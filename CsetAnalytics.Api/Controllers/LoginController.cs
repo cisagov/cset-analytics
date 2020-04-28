@@ -10,6 +10,7 @@ using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Interfaces;
 using CsetAnalytics.ViewModels.Login;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CsetAnalytics.Api.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/Login")]
     [ApiController]
     public class LoginController : ControllerBase

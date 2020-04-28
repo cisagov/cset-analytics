@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { MaterialModule } from './material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,6 +26,7 @@ import { DashboardService } from './components/dashboard/dashboard.service';
 import { DataTableModule } from 'ng-angular8-datatable';
 import { RegisterUserComponent } from './components/user-management/register-user/register-user.component';
 import { UserManagementService } from './components/user-management/user-management.service';
+import { ConfigService } from './services/config.service';
 
 @NgModule({
   declarations: [
@@ -55,12 +56,20 @@ import { UserManagementService } from './components/user-management/user-managem
     LoginService,
     DashboardService, 
     UserManagementService,
+    ConfigService,
+    {
+        provide: APP_INITIALIZER,
+        useFactory: (configSvc: ConfigService) => () => configSvc.loadConfig(),
+        deps: [ConfigService],
+        multi: true
+    },
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS, 
       useClass: AuthInterceptor, 
       multi: true
-    }
+    },
+    
   ],
   bootstrap: [AppComponent]
 })

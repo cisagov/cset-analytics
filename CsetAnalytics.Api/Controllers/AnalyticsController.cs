@@ -9,10 +9,12 @@ using CsetAnalytics.ViewModels;
 using CsetAnalytics.Interfaces.Analytics;
 using CsetAnalytics.Interfaces.Factories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 
 namespace CsetAnalytics.Api.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/Analytics")]
     [ApiController]
     public class AnalyticsController : ControllerBase

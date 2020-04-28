@@ -8,6 +8,7 @@ using CsetAnalytics.ViewModels;
 using CsetAnalytics.ViewModels.Login;
 using CsetAnalytics.ViewModels.Users;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace CsetAnalytics.Api.Controllers
 {
+    [EnableCors("AllowAll")]
     [ApiController]
     [Route("api/user")]
     public class UsersController : Controller

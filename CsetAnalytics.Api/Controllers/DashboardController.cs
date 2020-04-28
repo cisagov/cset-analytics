@@ -8,12 +8,14 @@ using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Interfaces.Dashboard;
 using CsetAnalytics.ViewModels.Dashboard;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace CsetAnalytics.Api.Controllers
 {
+    [EnableCors("AllowAll")]
     [Route("api/[controller]")]
     [ApiController]
     public class DashboardController : ControllerBase

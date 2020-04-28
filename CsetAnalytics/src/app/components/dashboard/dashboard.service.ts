@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Router } from "@angular/router";
+import { ConfigService } from '../../services/config.service';
 
 @Injectable()
 export class DashboardService {
   
-  private apiUrl: string;
-  constructor(private http: HttpClient, private router: Router) {
-    this.apiUrl = 'https://localhost:8881/api/';
+  apiUrl: string;
+  constructor(private http: HttpClient, private router: Router, public configSvc: ConfigService) {
+    this.apiUrl = configSvc.apiUrl;
   }
 
   getDashboard(assessment_id:number) {
