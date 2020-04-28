@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -53,17 +54,7 @@ namespace CsetAnalytics.Api
             services.AddControllers();
             services.AddSingleton(_config);
 
-            //var mappingConfig = new MapperConfiguration(mc =>
-            //{
-            //    mc.AddProfile(new FactoryProfile());
-            //});
-            //IMapper mapper = mappingConfig.CreateMapper();
-
             services.AddAutoMapper(typeof(FactoryProfile));
-
-            //services.AddSingleton(mapper);
-
-            
 
             services.AddCors(options =>
             {
@@ -135,19 +126,22 @@ namespace CsetAnalytics.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetService<CsetContext>();
-                context.Database.Migrate();
-            }
+            //using (var serviceScope = app.ApplicationServices.CreateScope())
+            //{
+            //    var context = serviceScope.ServiceProvider.GetService<CsetContext>();
+            //    context.Database.Migrate();
+            //}
             app.UseCors("AllowAll");
             app.UseAuthentication();
+            app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = new List<string> { "index.html" } });
 
             app.UseEndpoints(endpoints =>
             {
