@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using CsetAnalytics.Business;
 using CsetAnalytics.Business.Analytics;
@@ -17,7 +16,6 @@ using CsetAnalytics.Interfaces.Factories;
 using CsetAnalytics.ViewModels;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -52,24 +50,20 @@ namespace CsetAnalytics.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    });
+            });
             services.AddControllers();
             services.AddSingleton(_config);
 
             services.AddAutoMapper(typeof(FactoryProfile));
 
-            // ********************
-            // Setup CORS
-            // ********************
-            var corsBuilder = new CorsPolicyBuilder();
-            corsBuilder.AllowAnyHeader();
-            corsBuilder.AllowAnyMethod();
-            corsBuilder.AllowAnyOrigin();
-            corsBuilder.AllowCredentials();
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll", corsBuilder.Build());
-            });
+           
             services.AddDbContext<CsetContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("CsetConnection"), b=>b.MigrationsAssembly("CsetAnalytics.DomainModels")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -133,17 +127,15 @@ namespace CsetAnalytics.Api
             //    var context = serviceScope.ServiceProvider.GetService<CsetContext>();
             //    context.Database.Migrate();
             //}
-            app.UseCors("AllowAll");
+            
             app.UseAuthentication();
             app.UseStaticFiles();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("AllowAll");
             app.UseAuthorization();
-
-            app.UseDefaultFiles(new DefaultFilesOptions { DefaultFileNames = new List<string> { "index.html" } });
 
             app.UseEndpoints(endpoints =>
             {

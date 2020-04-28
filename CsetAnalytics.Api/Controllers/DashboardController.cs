@@ -15,7 +15,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace CsetAnalytics.Api.Controllers
 {
-    [EnableCors("AllowAll")]
+   
     [Route("api/[controller]")]
     [ApiController]
     public class DashboardController : ControllerBase
@@ -34,7 +34,7 @@ namespace CsetAnalytics.Api.Controllers
             this.context = context;
         }
 
-
+        [EnableCors("AllowAll")]
         [Authorize]
         [HttpGet]
         [Route("GetDashboardChart")]
@@ -54,6 +54,7 @@ namespace CsetAnalytics.Api.Controllers
             }
         }
 
+        [EnableCors("AllowAll")]
         [Authorize]
         [HttpGet]
         [Route("GetAssessmentList")]

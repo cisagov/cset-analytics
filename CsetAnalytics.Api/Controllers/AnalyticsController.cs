@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CsetAnalytics.Api.Controllers
 {
-    [EnableCors("AllowAll")]
     [Route("api/Analytics")]
     [ApiController]
     public class AnalyticsController : ControllerBase
