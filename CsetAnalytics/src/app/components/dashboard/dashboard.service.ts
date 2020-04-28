@@ -7,7 +7,7 @@ export class DashboardService {
   
   private apiUrl: string;
   constructor(private http: HttpClient, private router: Router) {
-    this.apiUrl = 'https://localhost:44397/api/';
+    this.apiUrl = 'https://localhost:8881/api/';
   }
 
   getDashboard(assessment_id:number) {
