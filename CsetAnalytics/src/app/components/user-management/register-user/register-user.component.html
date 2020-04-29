@@ -6,10 +6,10 @@
         <div class="container">
           <div class="row">
             <div class="col-md-3">
-              <form>
+              <form autocomplete="off">
                 <p>
                   <mat-form-field appearance="outline" [formGroup]="userFormGroup">
-                    <input type="text" matInput placeholder="Username" formControlName="username"
+                    <input type="text" matInput placeholder="Username" formControlName="username" autocomplete="off"
                       [errorStateMatcher]="matcherusername">
                       <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
                     <mat-error *ngIf="userFormGroup.controls.username.hasError('required')">
@@ -19,7 +19,7 @@
                 </p>
                 <p>
                   <mat-form-field appearance="outline" [formGroup]="userFormGroup">
-                      <input type="text" matInput placeholder="Email" formControlName="email"
+                      <input type="text" matInput placeholder="Email" formControlName="email" autocomplete="off"
                       [errorStateMatcher]="matchemail">
                       <mat-icon matPrefix style="margin-right:10px;">mail</mat-icon>
                       <mat-error *ngIf="userFormGroup.controls.email.hasError('required')">
@@ -32,7 +32,7 @@
                 </p>
                 <p>
                   <mat-form-field appearance="outline" [formGroup]="userFormGroup">
-                    <input type="password" matInput placeholder="Password" formControlName="password"
+                    <input type="password" matInput placeholder="Password" formControlName="password" autocomplete="off"
                       [errorStateMatcher]="matcherpassword">
                       <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
                     <mat-error *ngIf="userFormGroup.controls.password.hasError('required')">
@@ -43,7 +43,7 @@
     
                 <p >
                   <mat-form-field appearance="outline" [formGroup]="userFormGroup">
-                    <input type="password" matInput placeholder="Password" formControlName="confirmPassword"
+                    <input type="password" matInput placeholder="Password" formControlName="confirmPassword" autocomplete="off"
                       [errorStateMatcher]="matcherconfirmpassword">
                       <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
                     <mat-error *ngIf="userFormGroup.controls.confirmPassword.hasError('required')">
