@@ -122,20 +122,16 @@ namespace CsetAnalytics.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-            //using (var serviceScope = app.ApplicationServices.CreateScope())
-            //{
-            //    var context = serviceScope.ServiceProvider.GetService<CsetContext>();
-            //    context.Database.Migrate();
-            //}
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<CsetContext>();
+                context.Database.Migrate();
+            }
+
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-                context.Response.Headers.Add(
-                    "Content-Security-Policy",
-                    "default-src 'self'; " +
-                    "script-src 'self'; " +
-                    "style-src 'self'; " +
-                    "img-src 'self'");
                 context.Response.Headers.Add("X-Xss-Protection", "1");
                 await next();
             });
