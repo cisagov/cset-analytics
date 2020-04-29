@@ -60,7 +60,7 @@ namespace CsetAnalytics.Api.Controllers
                 {
 
                     var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, true, true);
-
+                    Response.Cookies.Delete(".AspNetCore.Identity.Application");
                     if (result.Succeeded)
                     {
 
