@@ -137,6 +137,9 @@ namespace CsetAnalytics.Api
             });
 
             app.UseAuthentication();
+
+            IdentityDataInitializer.SeedRoles(userManager, roleManager).GetAwaiter();
+
             app.UseStaticFiles();
 
             app.UseHttpsRedirection();
