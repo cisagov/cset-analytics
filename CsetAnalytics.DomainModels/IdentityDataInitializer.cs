@@ -29,17 +29,6 @@ namespace CsetAnalytics.DomainModels
                 IdentityResult roleResult = roleManager.
                     CreateAsync(role).Result;
             }
-
-            //if (!roleManager.Roles.Any())
-            //{
-            //    foreach (RolesEnum role in Enum.GetValues(typeof(RolesEnum)))
-            //    {
-            //        var newRole = new IdentityRole();
-            //        newRole.Name = role.ToString();
-            //        roleManager.CreateAsync(newRole);
-            //    }
-            //}
-
         }
     }
 }
