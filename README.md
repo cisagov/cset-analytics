@@ -1,8 +1,12 @@
 # cset-analytics
 
-### Running Docker
+## Environment File
 
-```
+When deploying to another environment, credentials other than the default local credentials should be used. Alter the values in .env for the desired environment.
+
+## Running Docker
+
+```bash
 # Build Docker Image
 docker-compose build
 
@@ -27,4 +31,7 @@ docker exec -it cset-analytics-postgres psql -U inl_user -d CsetAnalytics
 
 # Inspect Postgres Docker Volume
 docker volume inspect cset-analytics_pgdata
+
+# Remove Postgres Docker Volume (For resetting database)
+docker volume rm cset-analytics_pgdata
 ```
