@@ -63,9 +63,18 @@ namespace CsetAnalytics.Api
 
             services.AddAutoMapper(typeof(FactoryProfile));
 
-           
+           var pgUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
+           var pgPwd = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+           var pgDb = Environment.GetEnvironmentVariable("POSTGRES_DB");
+           var pgPort = Environment.GetEnvironmentVariable("POSTGRES_PORT");
+           var pgHost = Environment.GetEnvironmentVariable("POSTGRES_SERVER");
+           var connectionString = String.Format(
+               "Server={0};Port={1};Database={2};UserId={3};Password={4}",
+               pgHost, pgPort, pgDb, pgUser, pgPwd
+            );
+
             services.AddDbContext<CsetContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("CsetConnection"), b=>b.MigrationsAssembly("CsetAnalytics.DomainModels")));
+                options.UseNpgsql(connectionString, b=>b.MigrationsAssembly("CsetAnalytics.DomainModels")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<CsetContext>()
                 .AddDefaultTokenProviders();
