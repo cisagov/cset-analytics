@@ -19,6 +19,8 @@ export class DashboardComponent implements OnInit {
   yAxisLabel: string = '';
   showYAxisLabel: boolean = true;
   xAxisLabel: string = '';
+  showAssessments: boolean = false;
+  showComparison: boolean = false;
 
   colorScheme = {
     domain: ['#5AA454', '#C7B42C', '#AAAAAA']
@@ -40,7 +42,12 @@ export class DashboardComponent implements OnInit {
   getAssessmentData() {
     if(sessionStorage.getItem("username")){
       this.dashboardService.getAssessmentsForUser(sessionStorage.getItem("username")).subscribe((data: any)=>{
-        this.data= data;      
+        this.data= data; 
+        if (this.data.length > 0){
+          this.showAssessments = true;
+        } else {
+          this.showAssessments = false;
+        }
       });
     }
     
@@ -52,6 +59,11 @@ export class DashboardComponent implements OnInit {
         console.log("this is the data");
         console.log(data);
         this.dashboardData = data;
+        if (this.dashboardService != null){
+          this.showComparison = true;
+        } else {
+          this.showComparison = false;
+        }
       }      
     );
   }
