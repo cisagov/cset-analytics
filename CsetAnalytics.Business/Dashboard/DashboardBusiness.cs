@@ -242,7 +242,7 @@ namespace CsetAnalytics.Business.Dashboard
 
         public async Task<List<Assessment>> GetUserAssessments(string userId)
         {
-            return _context.Assessments.ToList();//.Where(x => x.AssessmentCreatorId == userId).ToList();
+            return _context.Assessments.Where(x=>x.AssessmentCreatorId == userId).ToList();
         }
     }
 
