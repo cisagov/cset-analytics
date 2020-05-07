@@ -10,7 +10,7 @@ To debug with visual studio, make sure that the docker containers are all stoppe
 
 ```bash
 # Starting posgres container
-docker run --name cset-analytics-vs-postgres -e POSTGRES_PASSWORD=LocalUserPassword123! -e POSTGRES_USER=local_user -d postgres
+docker run --name cset-analytics-vs-postgres -e POSTGRES_PASSWORD=LocalUserPassword123! -e POSTGRES_USER=local_user -p 5432:5432 -d postgres
 
 # Stopping postgres container
 docker stop cset-analytics-vs-postgres
