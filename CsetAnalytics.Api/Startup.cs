@@ -63,15 +63,28 @@ namespace CsetAnalytics.Api
 
             services.AddAutoMapper(typeof(FactoryProfile));
 
-           var pgUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
-           var pgPwd = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-           var pgDb = Environment.GetEnvironmentVariable("POSTGRES_DB");
-           var pgPort = Environment.GetEnvironmentVariable("POSTGRES_PORT");
-           var pgHost = Environment.GetEnvironmentVariable("POSTGRES_SERVER");
-           var connectionString = String.Format(
-               "Server={0};Port={1};Database={2};UserId={3};Password={4}",
-               pgHost, pgPort, pgDb, pgUser, pgPwd
-            );
+
+            // Get environment variable for connection string            
+            var pgUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
+            var pgPwd = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+            var pgDb = Environment.GetEnvironmentVariable("POSTGRES_DB");
+            var pgPort = Environment.GetEnvironmentVariable("POSTGRES_PORT");
+            var pgHost = Environment.GetEnvironmentVariable("POSTGRES_SERVER");
+
+            String connectionString = "";
+
+            // if environment variables do not exist, get connection string from config
+            if (pgUser == null || pgPwd == null || pgDb == null || pgPort == null || pgHost == null) {
+                connectionString = Configuration.GetConnectionString("CsetConnection");
+            }
+            // Generate connection string from environment variables 
+            else {
+                connectionString = String.Format(
+                    "Server={0};Port={1};Database={2};UserId={3};Password={4}",
+                    pgHost, pgPort, pgDb, pgUser, pgPwd
+                );
+            }
+           
 
             services.AddDbContext<CsetContext>(options =>
                 options.UseNpgsql(connectionString, b=>b.MigrationsAssembly("CsetAnalytics.DomainModels")));

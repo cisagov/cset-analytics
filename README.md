@@ -2,7 +2,22 @@
 
 ## Environment File
 
-When deploying to another environment, credentials other than the default local credentials should be used. Alter the values in .env for the desired environment.
+The local.env file has credentials for local development. Copy that file to a .env file and make any necessary changes.
+
+## Visual Studio Debugging
+
+To debug with visual studio, make sure that the docker containers are all stopped. Run the following command in order to bring up a postgres docker container for debugging purposes.
+
+```bash
+# Starting posgres container
+docker run --name cset-analytics-vs-postgres -e POSTGRES_PASSWORD=LocalUserPassword123! -e POSTGRES_USER=local_user -d postgres
+
+# Stopping postgres container
+docker stop cset-analytics-vs-postgres
+
+# Remove postgres container
+docker rm cset-analytics-vs-postgres
+```
 
 ## Running Docker
 
