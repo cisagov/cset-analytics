@@ -22,18 +22,13 @@ namespace CsetAnalytics.Api.Controllers
     [Route("api/user")]
     public class UsersController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IPasswordHasher<ApplicationUser> _hasher;
         private readonly IConfigurationRoot _config;
         private readonly CsetContext _context;
         private readonly IUserBusiness _userBusiness;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UsersController(UserManager<ApplicationUser> userManager, IPasswordHasher<ApplicationUser> hasher,
-            IConfigurationRoot config, CsetContext context, IUserBusiness userBusiness, RoleManager<IdentityRole> roleManager)
+        public UsersController(IConfigurationRoot config, CsetContext context, IUserBusiness userBusiness, RoleManager<IdentityRole> roleManager)
         {
-            _userManager = userManager;
-            _hasher = hasher;
             _config = config;
             _context = context;
             _userBusiness = userBusiness;
@@ -104,16 +99,16 @@ namespace CsetAnalytics.Api.Controllers
         {
             try
             {
-                string message = string.Empty;
-                if (!string.IsNullOrEmpty(user.Role))
-                {
-                    message += await _userBusiness.UpdateRole(user);
-                }
-                message += await _userBusiness.UpdateUser(user);
-                if (message == string.Empty)
-                {
-                    return Ok();
-                }
+                //string message = string.Empty;
+                //if (!string.IsNullOrEmpty(user.Role))
+                //{
+                //    message += await _userBusiness.UpdateRole(user);
+                //}
+                //message += await _userBusiness.UpdateUser(user);
+                //if (message == string.Empty)
+                //{
+                //    return Ok();
+                //}
                 return BadRequest("User could not be edited");
             }
             catch (Exception ex)
@@ -130,16 +125,16 @@ namespace CsetAnalytics.Api.Controllers
         {
             try
             {
-                string message = string.Empty;
-                if (!string.IsNullOrEmpty(user.NewPassword) && (user.NewPassword == user.ConfirmNewPassword))
-                {
-                    message = await _userBusiness.EditChangePassword(user);
-                }
+                //string message = string.Empty;
+                //if (!string.IsNullOrEmpty(user.NewPassword) && (user.NewPassword == user.ConfirmNewPassword))
+                //{
+                //    message = await _userBusiness.EditChangePassword(user);
+                //}
 
-                if (message == string.Empty)
-                {
-                    return Ok();
-                }
+                //if (message == string.Empty)
+                //{
+                //    return Ok();
+                //}
                 return BadRequest("User could not be edited");
             }
             catch (Exception ex)
@@ -156,41 +151,42 @@ namespace CsetAnalytics.Api.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    var user = await _userManager.FindByNameAsync(model.UserName);
+                //if (ModelState.IsValid)
+                //{
+                //    var user = await _userManager.FindByNameAsync(model.UserName);
 
-                    if (user != null)
-                    {
-                        if (await _userBusiness.PasswordCanBeUsed(user.Id, model.NewPassword))
-                        {
-                            if (model.NewPassword == model.ConfirmNewPassword)
-                            {
-                                var success = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-                                if (success.Succeeded)
-                                {
-                                    var applicationUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
-                                    if (applicationUser != null)
-                                    {
-                                        var changePassword = await _userBusiness.SavePasswordChange(applicationUser, false);
-                                        await _userBusiness.SavePasswordHistory(applicationUser);
-                                        return Ok(changePassword);
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            return BadRequest("Password cannot be used again.");
-                        }
-                    }
+                //    if (user != null)
+                //    {
+                //        if (await _userBusiness.PasswordCanBeUsed(user.Id, model.NewPassword))
+                //        {
+                //            if (model.NewPassword == model.ConfirmNewPassword)
+                //            {
+                //                var success = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                //                if (success.Succeeded)
+                //                {
+                //                    var applicationUser = await _context.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+                //                    if (applicationUser != null)
+                //                    {
+                //                        var changePassword = await _userBusiness.SavePasswordChange(applicationUser, false);
+                //                        await _userBusiness.SavePasswordHistory(applicationUser);
+                //                        return Ok(changePassword);
+                //                    }
+                //                }
+                //            }
+                //        }
+                //        else
+                //        {
+                //            return BadRequest("Password cannot be used again.");
+                //        }
+                //    }
 
-                    return BadRequest("Error occurred while changing password.");
-                }
-                else
-                {
-                    return BadRequest("Error occurred while changing password.");
-                }
+                //    return BadRequest("Error occurred while changing password.");
+                //}
+                //else
+                //{
+                //    return BadRequest("Error occurred while changing password.");
+                //}
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -206,13 +202,13 @@ namespace CsetAnalytics.Api.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(id);
+                //var user = await _userManager.FindByNameAsync(id);
 
-                if (user != null)
-                {
-                    return Ok(await _userBusiness.PasswordExpired(user.Id));
-                }
-                return BadRequest("Error occured while changing password.");
+                //if (user != null)
+                //{
+                //    return Ok(await _userBusiness.PasswordExpired(user.Id));
+                //}
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -228,12 +224,12 @@ namespace CsetAnalytics.Api.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(model.UserName);
+                //var user = await _userManager.FindByNameAsync(model.UserName);
 
-                if (user != null)
-                {
-                    return Ok(await _userBusiness.PasswordCanBeUsed(user.Id, model.NewPassword));
-                }
+                //if (user != null)
+                //{
+                //    return Ok(await _userBusiness.PasswordCanBeUsed(user.Id, model.NewPassword));
+                //}
                 return Ok(true);
             }
             catch (Exception ex)

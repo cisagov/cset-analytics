@@ -22,6 +22,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 
@@ -64,63 +65,53 @@ namespace CsetAnalytics.Api
             services.AddAutoMapper(typeof(FactoryProfile));
 
 
-            // Get environment variable for connection string            
-            var pgUser = Environment.GetEnvironmentVariable("POSTGRES_USER");
-            var pgPwd = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-            var pgDb = Environment.GetEnvironmentVariable("POSTGRES_DB");
-            var pgPort = Environment.GetEnvironmentVariable("POSTGRES_PORT");
-            var pgHost = Environment.GetEnvironmentVariable("POSTGRES_SERVER");
+            services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
+            services.AddSingleton<MongoDbSettings>(sp => sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
-            String connectionString = "";
+            //var pgUser = ""; // Environment.GetEnvironmentVariable("POSTGRES_USER");
+            //var pgPwd = ""; // Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+            //var pgDb = "CsetAnalytics"; //Environment.GetEnvironmentVariable("POSTGRES_DB");
+            //var pgPort = "5432"; // Environment.GetEnvironmentVariable("POSTGRES_PORT");
+            //ar pgHost = "localhost"; //Environment.GetEnvironmentVariable("POSTGRES_SERVER");
+           //var connectionString = String.Format(
+           //    "Server={0};Port={1};Database={2};UserId={3};Password={4}",
+           //    pgHost, pgPort, pgDb, pgUser, pgPwd
+           // );
 
-            // if environment variables do not exist, get connection string from config
-            if (pgUser == null || pgPwd == null || pgDb == null || pgPort == null || pgHost == null) {
-                connectionString = Configuration.GetConnectionString("CsetConnection");
-            }
-            // Generate connection string from environment variables 
-            else {
-                connectionString = String.Format(
-                    "Server={0};Port={1};Database={2};UserId={3};Password={4}",
-                    pgHost, pgPort, pgDb, pgUser, pgPwd
-                );
-            }
-           
+            //services.AddDbContext<CsetContext>(options =>
+            //    options.UseNpgsql(connectionString, b=>b.MigrationsAssembly("CsetAnalytics.DomainModels")));
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<CsetContext>()
+            //    .AddDefaultTokenProviders();
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    options.Password.RequireDigit = true;
+            //    options.Password.RequiredLength = 8;
+            //    options.Password.RequireNonAlphanumeric = true;
+            //    options.Password.RequireUppercase = true;
+            //    options.Password.RequireLowercase = true;
 
-            services.AddDbContext<CsetContext>(options =>
-                options.UseNpgsql(connectionString, b=>b.MigrationsAssembly("CsetAnalytics.DomainModels")));
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<CsetContext>()
-                .AddDefaultTokenProviders();
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
+            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(Int32.Parse(Configuration["Login:DefaultLockoutTimespan"]));
+            //    options.Lockout.AllowedForNewUsers = true;
 
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(Int32.Parse(Configuration["Login:DefaultLockoutTimespan"]));
-                options.Lockout.AllowedForNewUsers = true;
+            //    options.User.RequireUniqueEmail = true;
+            //});
 
-                options.User.RequireUniqueEmail = true;
-            });
-
-            var key = Encoding.ASCII.GetBytes(Configuration["Tokens:Key"]);
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.TokenValidationParameters = new TokenValidationParameters()
-                {
-                    ValidateIssuerSigningKey = true, 
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false, 
-                    ValidateAudience = false
-                    
-                };
-            });
+            //var key = Encoding.ASCII.GetBytes(Configuration["Tokens:Key"]);
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(o =>
+            //{
+            //    o.TokenValidationParameters = new TokenValidationParameters()
+            //    {
+            //        ValidateIssuerSigningKey = true, 
+            //        IssuerSigningKey = new SymmetricSecurityKey(key),
+            //        ValidateIssuer = false, 
+            //        ValidateAudience = false               
+            //    };
+            //});
 
             //Business
             services.AddTransient<IUserBusiness, UsersBusiness>();
@@ -128,8 +119,6 @@ namespace CsetAnalytics.Api
             services.AddTransient<IDashboardBusiness, DashboardBusiness>();
 
             //Factories
-            services.AddTransient<IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic>, AnalyticDemographicModelFactory>();
-            services.AddTransient<IBaseFactory<AnalyticDemographic, AnalyticDemographicViewModel>, AnalyticDemographicViewModelFactory>();
             services.AddTransient<IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestionAnswer>, AnalyticQuestionModelFactory>();
             services.AddTransient<IBaseFactory<AnalyticQuestionAnswer, AnalyticQuestionViewModel>, AnalyticQuestionViewModelFactory>();
             services.AddTransient<IBaseFactory<AnalyticAssessmentViewModel, Assessment>, AnalyticAssessmentFactory>();
@@ -138,7 +127,7 @@ namespace CsetAnalytics.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -148,7 +137,7 @@ namespace CsetAnalytics.Api
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<CsetContext>();
-                context.Database.Migrate();
+                //context.Database.Migrate();
             }
 
             app.Use(async (context, next) =>
@@ -160,7 +149,7 @@ namespace CsetAnalytics.Api
 
             app.UseAuthentication();
 
-            IdentityDataInitializer.SeedRoles(userManager, roleManager).GetAwaiter();
+            //IdentityDataInitializer.SeedRoles().GetAwaiter();
 
             app.UseStaticFiles();
 

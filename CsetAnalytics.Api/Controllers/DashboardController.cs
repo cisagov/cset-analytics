@@ -27,22 +27,21 @@ namespace CsetAnalytics.Api.Controllers
         
         
 
-        public DashboardController(IConfiguration config, IDashboardBusiness dashboardBusiness, CsetContext context)
+        public DashboardController(IConfiguration config, IDashboardBusiness dashboardBusiness)
         {   
             this.config = config;
             this._dashboardBusiness = dashboardBusiness;
-            this.context = context;
         }
 
         [EnableCors("AllowAll")]
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("GetDashboardChart")]
-        public async Task<IActionResult> GetDashBoardChart(int assessment_id)
+        public async Task<IActionResult> GetDashBoardChart(string assessment_id)
         {   
             try
             {
-                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 List<Series> dashboardChartData  = await _dashboardBusiness.GetAverages(assessment_id);
                 
@@ -55,17 +54,17 @@ namespace CsetAnalytics.Api.Controllers
         }
 
         [EnableCors("AllowAll")]
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [Route("GetAssessmentList")]
         public async Task<IActionResult> GetAssessmentList()
         {
             try
             {
-                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 //return Ok(context.Assessments.Where(x => x.AssessmentCreatorId == userId).ToList());
-                List<Assessment> assessmentData = await _dashboardBusiness.GetUserAssessments(userId);
+                List<Assessment> assessmentData = await _dashboardBusiness.GetUserAssessments("0");
 
                 return Ok(assessmentData);
             }

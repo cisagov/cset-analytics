@@ -18,17 +18,14 @@ namespace CsetAnalytics.Api.Controllers
     [ApiController]
     public class AnalyticsController : ControllerBase
     {
-        private readonly IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic> _demographicViewModelFactory;
         private readonly IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestionAnswer> _questionViewModelFactory;
         private readonly IBaseFactory<AnalyticAssessmentViewModel, Assessment> _assessmentViewModelFactory;
         private readonly IAnalyticBusiness _analyticsBusiness;
 
-        public AnalyticsController(IBaseFactory<AnalyticDemographicViewModel, AnalyticDemographic> demographicViewModelFactory,
-            IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestionAnswer> questionViewModelFactory,
+        public AnalyticsController(IBaseFactory<AnalyticQuestionViewModel, AnalyticQuestionAnswer> questionViewModelFactory,
             IAnalyticBusiness analyticsBusiness,
             IBaseFactory<AnalyticAssessmentViewModel, Assessment> assessmentViewModelFactory)
         {
-            _demographicViewModelFactory = demographicViewModelFactory;
             _questionViewModelFactory = questionViewModelFactory;
             _assessmentViewModelFactory = assessmentViewModelFactory;
             _analyticsBusiness = analyticsBusiness;
@@ -41,12 +38,7 @@ namespace CsetAnalytics.Api.Controllers
         {
             try
             {
-                
-                AnalyticDemographic demographic = _demographicViewModelFactory.Create(analytics.Demographics);
-                AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
-
                 Assessment assessment = _assessmentViewModelFactory.Create(analytics.Assessment);
-                assessment.AnalyticDemographicId = rDemographic.AnalyticDemographicId;
                 assessment.AssessmentCreatorId = null;
                 assessment = await _analyticsBusiness.SaveAssessment(assessment);
 
@@ -71,19 +63,19 @@ namespace CsetAnalytics.Api.Controllers
         public async Task<IActionResult> PostAnalytics([FromBody]AnalyticsViewModel analytics){
             try
             {
-                string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                AnalyticDemographic demographic = _demographicViewModelFactory.Create(analytics.Demographics);
+                //string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                //AnalyticDemographic demographic = _demographicViewModelFactory.Create(analytics.Demographics);
 
-                AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
-                Assessment assessment = _assessmentViewModelFactory.Create(analytics.Assessment);
-                assessment.AnalyticDemographicId = rDemographic.AnalyticDemographicId;
-                assessment.AssessmentCreatorId = userId;
-                assessment = await _analyticsBusiness.SaveAssessment(assessment);
+                //AnalyticDemographic rDemographic = await _analyticsBusiness.SaveAnalyticDemographic(demographic);
+                //Assessment assessment = _assessmentViewModelFactory.Create(analytics.Assessment);
+                ////assessment.AnalyticDemographicId = rDemographic.AnalyticDemographicId;
+                //assessment.AssessmentCreatorId = userId;
+                //assessment = await _analyticsBusiness.SaveAssessment(assessment);
 
-                List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
-                questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
-                questions.ForEach(x => x.Answer_Text = string.IsNullOrEmpty(x.Answer_Text) ? "U" : x.Answer_Text);
-                await _analyticsBusiness.SaveAnalyticQuestions(questions);                
+                //List<AnalyticQuestionAnswer> questions = (_questionViewModelFactory.Create(analytics.QuestionAnswers.AsQueryable())).ToList();
+                //questions.ForEach(x => x.Assessment_Id = assessment.Assessment_Id);
+                //questions.ForEach(x => x.Answer_Text = string.IsNullOrEmpty(x.Answer_Text) ? "U" : x.Answer_Text);
+                //await _analyticsBusiness.SaveAnalyticQuestions(questions);                
                 return Ok(new { message = "Analytics data saved" });
             }
             catch (Exception ex)

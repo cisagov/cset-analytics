@@ -17,8 +17,8 @@ namespace CsetAnalytics.Interfaces
         Task<string> UpdateRole(EditUser editUser);
         Task<bool> PasswordExpired(string userId);
         Task<bool> PasswordCanBeUsed(string userId, string newPassword);
-        Task SavePasswordHistory(ApplicationUser applicationUser);
-        Task<bool> SavePasswordChange(ApplicationUser applicationUser, bool changePassword);
+        Task SavePasswordHistory();
+        Task<bool> SavePasswordChange(bool changePassword);
         Task<string> EditChangePassword(EditUser editUser);
         Task<string> UpdateUser(EditUser user);
         Task DeleteUser(EditUser editUser);

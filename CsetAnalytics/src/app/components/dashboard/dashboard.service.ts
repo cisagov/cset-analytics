@@ -11,7 +11,7 @@ export class DashboardService {
     this.apiUrl = configSvc.apiUrl;
   }
 
-  getDashboard(assessment_id:number) {
+  getDashboard(assessment_id:string) {
     return this.http.get(this.apiUrl + 'Dashboard/GetDashboardChart?assessment_id='+assessment_id);
   }
 

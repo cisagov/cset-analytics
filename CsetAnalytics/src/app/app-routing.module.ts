@@ -9,21 +9,20 @@ import { RegisterUserComponent } from './components/user-management/register-use
 
 
 const routes: Routes = [
-  {
+  /*{
     path:'login', component: LayoutBlankComponent,
     children: [
       { path: '', component: LoginComponent}, 
       { path: 'registeruser', component: RegisterUserComponent}
-    ]
-  },
+  },*/
   {
-    path:'dashboard', component: LayoutMainComponent, canActivate: [AuthGuard], 
+    path:'dashboard', component: LayoutMainComponent, 
     children: [
       { path: '', component: DashboardComponent}
     ]
   },
   {
-    path:'', component: LayoutMainComponent, canActivate: [AuthGuard],
+    path:'', component: LayoutMainComponent,
     children: [
       { path: '', component: DashboardComponent}
     ]
