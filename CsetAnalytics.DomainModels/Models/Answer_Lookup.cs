@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson.Serialization.Attributes;
 
 
 namespace CsetAnalytics.DomainModels.Models
@@ -9,20 +10,13 @@ namespace CsetAnalytics.DomainModels.Models
     public partial class Answer_Lookup
     {
         
-        public Answer_Lookup()
-        {
-            AnalyticQuestionAnswers = new HashSet<AnalyticQuestionAnswer>();
-        }
+        public Answer_Lookup() {}
 
-        [Key]
-        [StringLength(50)]
+        [BsonId]
         public string Answer_Text { get; set; }
 
         [Required]
-        [StringLength(50)]
         public string Answer_Full_Name { get; set; }
 
-        
-        public virtual ICollection<AnalyticQuestionAnswer> AnalyticQuestionAnswers { get; set; }
     }
 }

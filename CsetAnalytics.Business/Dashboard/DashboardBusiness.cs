@@ -7,71 +7,66 @@ using CsetAnalytics.DomainModels;
 using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Interfaces.Dashboard;
 using CsetAnalytics.ViewModels.Dashboard;
+using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 
 namespace CsetAnalytics.Business.Dashboard
 {
     public class DashboardBusiness : IDashboardBusiness
     {
-        private readonly CsetContext _context;
 
         private const string IndustryAverageName = "Industry Average";
         private const string SectorAverageName = "Sector Average";
         private const string MyAssesmentAverageName = "Assessment Average";
 
+        private readonly CsetContext _context;
 
-        public DashboardBusiness(CsetContext context)
+        public DashboardBusiness(MongoDbSettings settings)
         {
-            _context = context;
+            _context = new CsetContext(settings);
         }
 
         private Series GetSectorAnalytics(int sector_id)
         {
-            //performance on this is going to such and I'm going to end up 
-            //wrapping it in a stored procedure some day but until then
-            //here we go. 
+            var assessments = (from a in _context.Assessments.AsQueryable()
+                where a.SectorId == sector_id
+                select a).ToList();
+            var query = (from a in assessments.AsQueryable()
+                join q in _context.Questions.AsQueryable() on a.Assessment_Id equals q.Assessment_Id
+                //where a.SectorId == sector_id
+                select q).ToList();
 
-            /*
-            select a."Assessment_Id", q."Answer_Text", count(q."Answer_Text") Answer_Count from "Assessments" a
-            join "AnalyticDemographics" d on a."AnalyticDemographicId" = d."AnalyticDemographicId"
-            join "AnalyticQuestionAnswer" q on a."Assessment_Id" = q."Assessment_Id"
-            where d."SectorId" = 15
-            group by a."Assessment_Id", q."Answer_Text"
-            */
-
-            var query = from a in _context.Assessments
-                        join d in _context.AnalyticDemographics on a.AnalyticDemographicId equals d.AnalyticDemographicId
-                        join q in _context.AnalyticQuestionAnswers on a.Assessment_Id equals q.Assessment_Id
-                        where d.SectorId == sector_id
-            group new { q.Assessment_Id,q.Answer_Text } by new
-            {
-                q.Assessment_Id,
-                q.Answer_Text
-             } into g
-            select new
-            {
-                g.Key.Assessment_Id,
-                g.Key.Answer_Text,
-                Count = g.Count()
-            };
-
-
+            var tempQuery = (from q in query.AsQueryable()
+                group new {q.Assessment_Id, q.Answer_Text} by new
+                {
+                    q.Assessment_Id,
+                    q.Answer_Text
+                }
+                into g
+                select new
+                {
+                    g.Key.Assessment_Id,
+                    g.Key.Answer_Text,
+                    Count = g.Count()
+                }).ToList();
 
             //go through get the sum total of all
             //get the sum of yes and alts
             //then calc the percent of each assessment and 
             //sector average.
 
-            Dictionary<int, QuickSum> sums = new Dictionary<int, QuickSum>();
-            foreach(var a in query.ToList())
+            Dictionary<string, QuickSum> sums = new Dictionary<string, QuickSum>();
+            foreach (var a in tempQuery)
             {
+                
                 QuickSum quickSum;
-                if(sums.TryGetValue(a.Assessment_Id,out quickSum))
+                if (sums.TryGetValue(a.Assessment_Id, out quickSum))
                 {
                     quickSum.TotalCount += a.Count;
-                    if(a.Answer_Text == "Y" || a.Answer_Text == "A")
+                    if (a.Answer_Text == "Y" || a.Answer_Text == "A")
                     {
                         quickSum.YesAltCount += a.Count;
-                    }                    
+                    }
                 }
                 else
                 {
@@ -87,41 +82,43 @@ namespace CsetAnalytics.Business.Dashboard
 
             //calculate the average percentage of all the assessments
             double average = 0;
-            foreach(QuickSum s in sums.Values)
+            foreach (QuickSum s in sums.Values)
             {
                 average += s.Percentage;
             }
-            average = average / (sums.Values.Count()==0?1:sums.Values.Count());
+            average = average / (sums.Values.Count() == 0 ? 1 : sums.Values.Count());
 
-            return new Series() { name = SectorAverageName, value = average*100 };
+            return new Series() { name = SectorAverageName, value = average * 100 };
         }
 
         private Series GetIndustryAnalytics(int sector_id, int industry_id)
         {
-            var query = from a in _context.Assessments
-                        join d in _context.AnalyticDemographics on a.AnalyticDemographicId equals d.AnalyticDemographicId
-                        join q in _context.AnalyticQuestionAnswers on a.Assessment_Id equals q.Assessment_Id
-                        where d.IndustryId == industry_id && d.SectorId == sector_id
-                        group new { q.Assessment_Id, q.Answer_Text } by new
-                        {
-                            q.Assessment_Id,
-                            q.Answer_Text
-                        } into g
-                        select new
-                        {
-                            g.Key.Assessment_Id,
-                            g.Key.Answer_Text,
-                            Count = g.Count()
-                        };
+            var assessment = (from a in _context.Assessments.AsQueryable()
+                where a.IndustryId == industry_id && a.SectorId == sector_id
+                         select a).ToList();
+            var questions = (from a in assessment.AsQueryable()
+                join q in _context.Questions.AsQueryable() on a.Assessment_Id equals q.Assessment_Id
+                select q);
+            var query = (from q in questions.AsQueryable()
+            group new { q.Assessment_Id, q.Answer_Text } by new
+                {
+                    q.Assessment_Id,
+                    q.Answer_Text
+                }
+                into g
+                select new
+                {
+                    g.Key.Assessment_Id,
+                    g.Key.Answer_Text,
+                    Count = g.Count()
+                }).ToList();
 
+            ////go through get the sum total of all
+            ////get the sum of yes and alts
+            ////then calc the percent of each assessment and 
+            ////sector average.
 
-
-            //go through get the sum total of all
-            //get the sum of yes and alts
-            //then calc the percent of each assessment and 
-            //sector average.
-
-            Dictionary<int, QuickSum> sums = new Dictionary<int, QuickSum>();
+            Dictionary<string, QuickSum> sums = new Dictionary<string, QuickSum>();
             foreach (var a in query.ToList())
             {
                 QuickSum quickSum;
@@ -151,37 +148,40 @@ namespace CsetAnalytics.Business.Dashboard
             {
                 average += s.Percentage;
             }
-            average = average / (sums.Values.Count()==0?1:sums.Values.Count());
+            average = average / (sums.Values.Count() == 0 ? 1 : sums.Values.Count());
 
-            return new Series() { name = IndustryAverageName, value = average * 100 } ;
+            return new Series() { name = IndustryAverageName, value = average * 100 };
+           
         }
 
-        private Series GetMyAnalytics(int myAssessment_Id)
+        private Series GetMyAnalytics(string myAssessment_Id)
         {
-            var query = from a in _context.Assessments
-                        join d in _context.AnalyticDemographics on a.AnalyticDemographicId equals d.AnalyticDemographicId
-                        join q in _context.AnalyticQuestionAnswers on a.Assessment_Id equals q.Assessment_Id
-                        where a.Assessment_Id == myAssessment_Id
-                        group new { q.Assessment_Id, q.Answer_Text } by new
-                        {
-                            q.Assessment_Id,
-                            q.Answer_Text
-                        } into g
-                        select new
-                        {
-                            g.Key.Assessment_Id,
-                            g.Key.Answer_Text,
-                            Count = g.Count()
-                        };
-
-
+            var assessments = (from a in _context.Assessments.AsQueryable()
+                where a.Assessment_Id == myAssessment_Id
+                select a).ToList();
+            var questions = (from a in assessments.AsQueryable()
+                join q in _context.Questions.AsQueryable() on a.Assessment_Id equals q.Assessment_Id
+                select q).ToList();
+            var query = (from q in questions.AsQueryable()
+                group new { q.Assessment_Id, q.Answer_Text } by new
+                {
+                    q.Assessment_Id,
+                    q.Answer_Text
+                }
+                into g
+                select new
+                {
+                    g.Key.Assessment_Id,
+                    g.Key.Answer_Text,
+                    Count = g.Count()
+                }).ToList();
 
             //go through get the sum total of all
             //get the sum of yes and alts
             //then calc the percent of each assessment and 
             //sector average.
 
-            Dictionary<int, QuickSum> sums = new Dictionary<int, QuickSum>();
+            Dictionary<string, QuickSum> sums = new Dictionary<string, QuickSum>();
             foreach (var a in query.ToList())
             {
                 QuickSum quickSum;
@@ -216,15 +216,16 @@ namespace CsetAnalytics.Business.Dashboard
             return new Series() { name = MyAssesmentAverageName, value = average * 100 };
         }
 
-        public async Task<List<Series>> GetAverages(int assessment_id)
+        public async Task<List<Series>> GetAverages(string assessment_id)
         {
-            var assessment =  _context.Assessments.Where(x => x.Assessment_Id == assessment_id).FirstOrDefault();
+            //var assessment =  _context.Assessments.Where(x => x.Assessment_Id == assessment_id).FirstOrDefault();
+            var assessment = await _context.Assessments.FindAsync(a => a.Assessment_Id == assessment_id).Result.FirstOrDefaultAsync();
             
             if(assessment != null)
             {
-                var demographic = _context.AnalyticDemographics.Where(x => x.AnalyticDemographicId == assessment.AnalyticDemographicId).FirstOrDefault();
-                var sectionAnalytics = GetSectorAnalytics(demographic.SectorId);
-                var industryAnalytics = GetIndustryAnalytics(demographic.SectorId,demographic.IndustryId);
+                
+                var sectionAnalytics = GetSectorAnalytics(assessment.SectorId);
+                var industryAnalytics = GetIndustryAnalytics(assessment.SectorId,assessment.IndustryId);
                 var myAnalytics = GetMyAnalytics(assessment_id);
                 List<Series> listseries = new List<Series>();
                 listseries.Add(sectionAnalytics);
@@ -236,19 +237,19 @@ namespace CsetAnalytics.Business.Dashboard
             {
                 return new List<Series>();
             }
-
-            
         }
 
-        public async Task<List<Assessment>> GetUserAssessments(string userId)
+        public async Task<List<Assessment>> GetUserAssessments(string userId = "0")
         {
-            return _context.Assessments.ToList();//.Where(x => x.AssessmentCreatorId == userId).ToList();
+            var assessments = await _context.Assessments.Find(a => true).ToListAsync();
+            return assessments;
+
         }
     }
 
     internal class QuickSum
     {
-        public int assesment_id { get; set; }
+        public string assesment_id { get; set; }
         public int TotalCount { get; set; }
         public int YesAltCount { get; set; }
         public double Percentage { 

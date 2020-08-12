@@ -16,9 +16,7 @@ namespace CsetAnalytics.Factories
 
         private void RegisterMappings()
         {
-            CreateMap<AnalyticDemographic, AnalyticDemographicViewModel>();
             CreateMap<AnalyticQuestionAnswer, AnalyticQuestionViewModel>();
-            CreateMap<AnalyticDemographicViewModel, AnalyticDemographic>();
             CreateMap<AnalyticQuestionViewModel, AnalyticQuestionAnswer>()
                 .ForMember(dest => dest.Question_Or_Requirement_Id, 
                     opt=>opt.MapFrom( 

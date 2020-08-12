@@ -24,21 +24,15 @@ namespace CsetAnalytics.Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfiguration config;
         private readonly CsetContext context;
         private readonly IUserBusiness userBusiness;
-        private readonly SignInManager<ApplicationUser> signInManager;
-
-        public LoginController(UserManager<ApplicationUser> userManager,
-            IConfiguration config, CsetContext context, IUserBusiness userBusiness,
-            SignInManager<ApplicationUser> signInManager)
+        
+        public LoginController(IConfiguration config, CsetContext context, IUserBusiness userBusiness)
         {
-            this.userManager = userManager;
             this.config = config;
             this.context = context;
             this.userBusiness = userBusiness;
-            this.signInManager = signInManager;
         }
 
         /// <summary>
@@ -54,82 +48,83 @@ namespace CsetAnalytics.Api.Controllers
             try
             {
 
-                var user = await userManager.FindByNameAsync(model.UserName);
+                //var user = await userManager.FindByNameAsync(model.UserName);
 
-                if (user != null)
-                {
+                //if (user != null)
+                //{
 
-                    var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, true, true);
-                    Response.Cookies.Delete(".AspNetCore.Identity.Application");
-                    Response.Headers.Remove("Set-Cookie");
-                    if (result.Succeeded)
-                    {
+                //    var result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, true, true);
+                //    Response.Cookies.Delete(".AspNetCore.Identity.Application");
+                //    Response.Headers.Remove("Set-Cookie");
+                //    if (result.Succeeded)
+                //    {
 
-                        var roles = await userManager.GetRolesAsync(user);
-                        var claims = new[]
-                        {
-                            new Claim(JwtRegisteredClaimNames.NameId, user.Id),
-                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                            new Claim(ClaimTypes.Role, roles.FirstOrDefault())
-                        };
+                //        var roles = await userManager.GetRolesAsync(user);
+                //        var claims = new[]
+                //        {
+                //            new Claim(JwtRegisteredClaimNames.NameId, user.Id),
+                //            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                //            new Claim(ClaimTypes.Role, roles.FirstOrDefault())
+                //        };
 
-                        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token");
-
-
-                        //   claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, roles.FirstOrDefault()));
-                        var keyBytes = Encoding.ASCII.GetBytes(config["Tokens:Key"]);
-                        var key = new SymmetricSecurityKey(keyBytes);
-                        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                        var changePassword = user.ChangePassword;
-                        var tokenDescriptor = new SecurityTokenDescriptor
-                        {
-                            Subject = claimsIdentity,
-                            Expires = DateTime.UtcNow.AddHours(int.Parse(config["Tokens:Timeout"])),
-                            Issuer = config["Tokens:Issuer"],
-                            Audience = config["Tokens:Audience"],
-                            SigningCredentials = creds
-                        };
+                //        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token");
 
 
-                        var tokenHandler = new JwtSecurityTokenHandler();
-                        var token = tokenHandler.CreateToken(tokenDescriptor);
+                //        //   claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, roles.FirstOrDefault()));
+                //        var keyBytes = Encoding.ASCII.GetBytes(config["Tokens:Key"]);
+                //        var key = new SymmetricSecurityKey(keyBytes);
+                //        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                //        var changePassword = user.ChangePassword;
+                //        var tokenDescriptor = new SecurityTokenDescriptor
+                //        {
+                //            Subject = claimsIdentity,
+                //            Expires = DateTime.UtcNow.AddHours(int.Parse(config["Tokens:Timeout"])),
+                //            Issuer = config["Tokens:Issuer"],
+                //            Audience = config["Tokens:Audience"],
+                //            SigningCredentials = creds
+                //        };
 
 
-                        if (await userBusiness.PasswordExpired(user.Id))
-                        {
-                            changePassword = await userBusiness.SavePasswordChange(user, true);
-                        }
+                //        var tokenHandler = new JwtSecurityTokenHandler();
+                //        var token = tokenHandler.CreateToken(tokenDescriptor);
 
-                        return Ok(new
-                        {
-                            Token = tokenHandler.WriteToken(token),
-                            Expiration = token.ValidTo,
-                            user.UserName,
-                            ChangePassword = changePassword,
-                            Role = roles.FirstOrDefault()
-                        });
 
-                    }
-                    else if (result.IsLockedOut)
-                    {
-                        string minutesText = int.Parse(config["Login:DefaultLockoutTimeSpan"]) > 1
-                            ? "minutes"
-                            : "minute";
-                        return StatusCode(423,
-                            $"Account is locked.  Please try again in {config["Login:DefaultLockoutTimeSpan"]} {minutesText}.");
-                    }
-                    else if (result == Microsoft.AspNetCore.Identity.SignInResult.Failed)
-                    {
+                //        if (await userBusiness.PasswordExpired(user.Id))
+                //        {
+                //            changePassword = await userBusiness.SavePasswordChange(user, true);
+                //        }
 
-                        return StatusCode(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden, "Failed to Login.");
+                //        return Ok(new
+                //        {
+                //            Token = tokenHandler.WriteToken(token),
+                //            Expiration = token.ValidTo,
+                //            user.UserName,
+                //            ChangePassword = changePassword,
+                //            Role = roles.FirstOrDefault()
+                //        });
 
-                    }
-                }
-                else
-                {
-                    return StatusCode(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden, "Failed to Login.");
-                }
+                //    }
+                //    else if (result.IsLockedOut)
+                //    {
+                //        string minutesText = int.Parse(config["Login:DefaultLockoutTimeSpan"]) > 1
+                //            ? "minutes"
+                //            : "minute";
+                //        return StatusCode(423,
+                //            $"Account is locked.  Please try again in {config["Login:DefaultLockoutTimeSpan"]} {minutesText}.");
+                //    }
+                //    else if (result == Microsoft.AspNetCore.Identity.SignInResult.Failed)
+                //    {
+
+                //        return StatusCode(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden, "Failed to Login.");
+
+                //    }
+                //}
+                //else
+                //{
+                //    return StatusCode(Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden, "Failed to Login.");
+                //}
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -137,8 +132,6 @@ namespace CsetAnalytics.Api.Controllers
                 var error = ex.Message;
                 return BadRequest($"An exception occurred in login. Error Message {error}");
             }
-
-            return BadRequest("Something went wrong in login.");
         }
 
         [Authorize]
@@ -150,36 +143,37 @@ namespace CsetAnalytics.Api.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = await userManager.FindByNameAsync(model.UserName);
+                    //var user = await userManager.FindByNameAsync(model.UserName);
 
-                    if (user != null)
-                    {
-                        if (await userBusiness.PasswordCanBeUsed(user.Id, model.NewPassword))
-                        {
-                            if (model.NewPassword == model.ConfirmNewPassword)
-                            {
-                                var success = await userManager.ChangePasswordAsync(user, model.CurrentPassword,
-                                    model.NewPassword);
-                                if (success.Succeeded)
-                                {
-                                    var applicationUser = await context.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
-                                    if (applicationUser != null)
-                                    {
-                                        var changePassword =
-                                            await userBusiness.SavePasswordChange(applicationUser, false);
-                                        await userBusiness.SavePasswordHistory(applicationUser);
-                                        return Ok(changePassword);
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            return BadRequest("Password cannot be used again.");
-                        }
-                    }
+                    //if (user != null)
+                    //{
+                    //    if (await userBusiness.PasswordCanBeUsed(user.Id, model.NewPassword))
+                    //    {
+                    //        if (model.NewPassword == model.ConfirmNewPassword)
+                    //        {
+                    //            var success = await userManager.ChangePasswordAsync(user, model.CurrentPassword,
+                    //                model.NewPassword);
+                    //            if (success.Succeeded)
+                    //            {
+                    //                var applicationUser = await context.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+                    //                if (applicationUser != null)
+                    //                {
+                    //                    var changePassword =
+                    //                        await userBusiness.SavePasswordChange(applicationUser, false);
+                    //                    await userBusiness.SavePasswordHistory(applicationUser);
+                    //                    return Ok(changePassword);
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        return BadRequest("Password cannot be used again.");
+                    //    }
+                    //}
 
-                    return BadRequest("Error occurred while changing password.");
+                    //return BadRequest("Error occurred while changing password.");
+                    return Ok();
                 }
                 else
                 {

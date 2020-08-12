@@ -9,7 +9,6 @@ namespace CsetAnalytics.Interfaces.Analytics
 {
     public interface IAnalyticBusiness
     {
-        Task<AnalyticDemographic> SaveAnalyticDemographic(AnalyticDemographic demographic);
         Task SaveAnalyticQuestions(List<AnalyticQuestionAnswer> questions);
         Task<Assessment> SaveAssessment(Assessment assessment);
     }

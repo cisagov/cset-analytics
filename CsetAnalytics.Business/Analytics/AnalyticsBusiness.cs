@@ -1,40 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CsetAnalytics.DomainModels;
 using CsetAnalytics.DomainModels.Models;
 using CsetAnalytics.Interfaces.Analytics;
+using Microsoft.Extensions.Options;
+using MongoDB.Bson;
+using MongoDB.Driver; 
+
 
 namespace CsetAnalytics.Business.Analytics
 {
     public class AnalyticsBusiness : IAnalyticBusiness
     {
+        private readonly IMongoCollection<Assessment> _assessment;
+        private readonly IMongoCollection<AnalyticQuestionAnswer> _questions;
         private readonly CsetContext _context;
 
-        public AnalyticsBusiness(CsetContext context)
+        public AnalyticsBusiness(MongoDbSettings settings)
         {
-            _context = context;
-        }
+           var client = new MongoClient(settings.ConnectionString);
 
+           _context = new CsetContext(settings);
 
-        public async Task<AnalyticDemographic> SaveAnalyticDemographic(AnalyticDemographic demographic)
-        {
-            _context.AnalyticDemographics.Add(demographic);
-            await _context.SaveChangesAsync();
-            return demographic;
         }
 
         public async Task SaveAnalyticQuestions(List<AnalyticQuestionAnswer> questions)
         {
-            await _context.AnalyticQuestionAnswers.AddRangeAsync(questions);
-            await _context.SaveChangesAsync();
+            await _context.Questions.InsertManyAsync(questions);
+            //await _questions.InsertManyAsync(questions);
         }
 
         public async Task<Assessment> SaveAssessment(Assessment assessment)
         {
-            _context.Assessments.Add(assessment);
-            await _context.SaveChangesAsync();
+            await _context.Assessments.InsertOneAsync(assessment);
+            //await _assessment.InsertOneAsync(assessment);
             return assessment;
         }
 
