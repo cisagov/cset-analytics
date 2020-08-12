@@ -64,11 +64,12 @@ namespace CsetAnalytics.Api
 
             services.AddAutoMapper(typeof(FactoryProfile));
 
+
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
             services.AddSingleton<MongoDbSettings>(sp => sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
-            //var pgUser = "inl_user"; // Environment.GetEnvironmentVariable("POSTGRES_USER");
-            //var pgPwd = "1qaz!QAZ"; // Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
+            //var pgUser = ""; // Environment.GetEnvironmentVariable("POSTGRES_USER");
+            //var pgPwd = ""; // Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
             //var pgDb = "CsetAnalytics"; //Environment.GetEnvironmentVariable("POSTGRES_DB");
             //var pgPort = "5432"; // Environment.GetEnvironmentVariable("POSTGRES_PORT");
             //ar pgHost = "localhost"; //Environment.GetEnvironmentVariable("POSTGRES_SERVER");
@@ -108,8 +109,7 @@ namespace CsetAnalytics.Api
             //        ValidateIssuerSigningKey = true, 
             //        IssuerSigningKey = new SymmetricSecurityKey(key),
             //        ValidateIssuer = false, 
-            //        ValidateAudience = false
-                    
+            //        ValidateAudience = false               
             //    };
             //});
 
