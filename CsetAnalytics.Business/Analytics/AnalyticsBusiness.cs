@@ -27,13 +27,11 @@ namespace CsetAnalytics.Business.Analytics
         public async Task SaveAnalyticQuestions(List<AnalyticQuestionAnswer> questions)
         {
             await _context.Questions.InsertManyAsync(questions);
-            //await _questions.InsertManyAsync(questions);
         }
 
         public async Task<Assessment> SaveAssessment(Assessment assessment)
         {
             await _context.Assessments.InsertOneAsync(assessment);
-            //await _assessment.InsertOneAsync(assessment);
             return assessment;
         }
 
