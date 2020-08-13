@@ -243,7 +243,6 @@ namespace CsetAnalytics.Business.Dashboard
         {
             var assessments = await _context.Assessments.Find(a => true).ToListAsync();
             return assessments;
-
         }
     }
 

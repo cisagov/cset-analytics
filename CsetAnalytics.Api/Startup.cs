@@ -64,6 +64,7 @@ namespace CsetAnalytics.Api
 
             services.AddAutoMapper(typeof(FactoryProfile));
 
+
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
             services.AddSingleton<MongoDbSettings>(sp => sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
