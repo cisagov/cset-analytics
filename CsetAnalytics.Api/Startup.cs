@@ -67,52 +67,6 @@ namespace CsetAnalytics.Api
             services.Configure<MongoDbSettings>(Configuration.GetSection(nameof(MongoDbSettings)));
             services.AddSingleton<MongoDbSettings>(sp => sp.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
-            //var pgUser = "inl_user"; // Environment.GetEnvironmentVariable("POSTGRES_USER");
-            //var pgPwd = "1qaz!QAZ"; // Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-            //var pgDb = "CsetAnalytics"; //Environment.GetEnvironmentVariable("POSTGRES_DB");
-            //var pgPort = "5432"; // Environment.GetEnvironmentVariable("POSTGRES_PORT");
-            //ar pgHost = "localhost"; //Environment.GetEnvironmentVariable("POSTGRES_SERVER");
-           //var connectionString = String.Format(
-           //    "Server={0};Port={1};Database={2};UserId={3};Password={4}",
-           //    pgHost, pgPort, pgDb, pgUser, pgPwd
-           // );
-
-            //services.AddDbContext<CsetContext>(options =>
-            //    options.UseNpgsql(connectionString, b=>b.MigrationsAssembly("CsetAnalytics.DomainModels")));
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<CsetContext>()
-            //    .AddDefaultTokenProviders();
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    options.Password.RequireDigit = true;
-            //    options.Password.RequiredLength = 8;
-            //    options.Password.RequireNonAlphanumeric = true;
-            //    options.Password.RequireUppercase = true;
-            //    options.Password.RequireLowercase = true;
-
-            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(Int32.Parse(Configuration["Login:DefaultLockoutTimespan"]));
-            //    options.Lockout.AllowedForNewUsers = true;
-
-            //    options.User.RequireUniqueEmail = true;
-            //});
-
-            //var key = Encoding.ASCII.GetBytes(Configuration["Tokens:Key"]);
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(o =>
-            //{
-            //    o.TokenValidationParameters = new TokenValidationParameters()
-            //    {
-            //        ValidateIssuerSigningKey = true, 
-            //        IssuerSigningKey = new SymmetricSecurityKey(key),
-            //        ValidateIssuer = false, 
-            //        ValidateAudience = false
-                    
-            //    };
-            //});
-
             //Business
             services.AddTransient<IUserBusiness, UsersBusiness>();
             services.AddTransient<IAnalyticBusiness, AnalyticsBusiness>();
@@ -127,7 +81,7 @@ namespace CsetAnalytics.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MongoDbSettings settings)
         {
             if (env.IsDevelopment())
             {
@@ -137,7 +91,6 @@ namespace CsetAnalytics.Api
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<CsetContext>();
-                //context.Database.Migrate();
             }
 
             app.Use(async (context, next) =>
@@ -148,8 +101,8 @@ namespace CsetAnalytics.Api
             });
 
             app.UseAuthentication();
-
-            //IdentityDataInitializer.SeedRoles().GetAwaiter();
+            IMongoDbSettings dbSettings = settings;
+            DatabaseInitializer.SeedCollections(dbSettings).GetAwaiter();
 
             app.UseStaticFiles();
 
